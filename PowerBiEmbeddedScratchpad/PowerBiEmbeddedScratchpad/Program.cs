@@ -38,9 +38,6 @@ namespace PowerBiEmbeddedScratchpad {
       //PageGenerator.GenerateReportWithRls(launchInBrowser);
       //PageGenerator.GenerateReportWithCorrelationId(launchInBrowser);
       //PageGenerator.GenerateReportWithDynamicBinding(launchInBrowser);
-      //PageGenerator.GenerateNewReportCreateVisual(launchInBrowser);
-      //PageGenerator.GeneratePaginatedReportPage(launchInBrowser);
-      //PageGenerator.GeneratePaginatedReportPageAppOnly(launchInBrowser);
 
     }
   }
