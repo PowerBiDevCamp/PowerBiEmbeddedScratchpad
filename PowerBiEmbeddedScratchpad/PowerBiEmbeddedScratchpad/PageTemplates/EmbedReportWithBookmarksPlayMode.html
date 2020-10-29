@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <title>@AppName</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.js"></script>
+</head>
+
+<body>
+
+  <div id="embedContainer" />
+
+  <script>
+
+    // data required for embedding Power BI report
+    var embedReportId = "@EmbedReportId";
+    var embedUrl = "@EmbedUrl";
+    var accessToken = "@EmbedToken";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    var config = {
+      type: 'report',
+      id: embedReportId,
+      embedUrl: embedUrl,
+      accessToken: accessToken,
+      tokenType: models.TokenType.Embed,
+      settings: {
+        panes: {
+          filters: { visible: false }
+        }
+      }
+    };
+
+    var embedContainer = document.getElementById('embedContainer');
+    var report = powerbi.embed(embedContainer, config);
+
+    report.on('loaded', function () {
+      report.bookmarksManager.play(models.BookmarksPlayMode.Presentation);
+    });
+
+    $(function () {
+      var widthBuffer = 272;
+      var heightBuffer = 18;
+      $("#embedContainer").width($(window).width() - widthBuffer);
+      $("#embedContainer").height($(window).height() - heightBuffer);
+      $("#leftnav").height($(window).height() - heightBuffer);
+      $(window).resize(function () {
+        $("#embedContainer").width($(window).width() - widthBuffer);
+        $("#embedContainer").height($(window).height() - (heightBuffer));
+        $("#leftnav").height($(window).height() - heightBuffer);
+      });
+    });
+
+  </script>
+</body>
+</html>

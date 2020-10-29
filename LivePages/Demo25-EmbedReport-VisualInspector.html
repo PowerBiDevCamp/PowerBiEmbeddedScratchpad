@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Report Inspector</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.js"></script>
+</head>
+
+<body>
+
+  <div id="output-display" style="float:right; width:400px; overflow: auto;">
+    <h3>Visuals in this report</h3>
+    <table id="visual-table"></table>
+    <div>
+      <button id="exportVisualTable" title="Export Visual Table" style="display:none;">Export Visual Table</button>
+    </div>
+  </div>
+
+  <div id="embedContainerContainer" style="margin-right:420px">
+    <div id="embedContainer" />
+  </div>
+
+  <script>
+
+    // data required for embedding Power BI report
+    var embedReportId = "69ad0538-a1ab-4897-bb99-cd3baaa17833";
+    var embedUrl = "https://app.powerbi.com/reportEmbed";
+    var accessToken = "H4sIAAAAAAAEAB2Wxw6s3BGE3-VusUQYGMDSvyDnnNmRc85YfnfP9b6lo-5T9VX954-ZPP2U5H_-_Yfh_I8bd5kRCLuHKn22oxK_flH_EMzOGqhKtd9YI_IY0FN2TEgtQEaLXMdmhb3ueaVZFPA-NtdhkpFOmU8mYk4zfUEdqRHN4GdniSmS2_POoXvYaETNizqFBlhIQZO9TxhW4rQzTy0GZW4atg5QAZkM82JlgYRdZwr3U3oQnQ7A3UeqvUQdyiaUOePzdB57KLUzUGXgjjhW_SZG214v-EBRBhbehQQ8HvLvfSHmi8fM-ulqqYh5svH51YUJk2dHNyEq8t3tGsR61x72UwTR7Y3msn7He3y7aaFmNJ4wIOSG1-ejcYQbN_CR1aNcb7Ix-gVvZd1Tppq_JtI8TG26azaR4MPkyY28U84RW7yO8D0jMfquESzLlDv7tzLNB7-VNauU8jeDcm6cs_hYdXN2NVYDX_xbWAWh7Usnihx7eboS91TWw5-GN-21m9Iyx05w8Ic2pHHbSicyCpPhQL3CgbiTXBsGMePZCVzZ3AtsU4aub6gDTHu1OjWitG4gvdGVaKs9O7WvVu7FbpWhbgOjr7EldTSibm6igstfvrzcen-DXszdD4sCCCzkKTRqq3MNMAgXgSo9vXYsKYzcg_KOgm_J9dgVSLLj61kS2O0MDbpenTcgcogzyWKWzm-5sfUNyiINmh2bYwtxA5ng4tRung5wAjht39CyDP1MZOYN0N2lTST6ybP2H0ihbJS2QL_QjDm2Gx-hnxpGMNExM3omQ_E8LluoQMTLu5k_BAls-SOuKwlG092kKOPOMRTC7vKtVG31Lv_E7KD6oqPOsCG6E-49YG6daNooQc4WYJMLC4j3fbLbWwT7-HlEtvDAsAZ6F8mZ9vGSSKH6Oj9iTKIW4fra99GRRQX3Iz38zFDfRX_FlXWWfK1Iyi2leW_Sk_AxCTIOUBeFbdWiywGz7DuVLZHVCHXcC39FvlCKcnc951dkup5sr65gQTswMu54RxwFKOY-jeLthzcTqiZJJqtOX_SxChqTB2DtHFgpAsScTrKuCRliq0Zv-cYzMekJsYTlRl0S2Dc-4A_0omPPNCDUTSa8AsxZ6VTIuuEB8g_Rmu-5AHS8vbHgoWVh2wziY6IvehYileGneMAEgYBCeDgZS6zfBplcvvY-HB3QV6rlejTaIsE8oD723Jg5hZOqNTRG-85rAHmZzyFLtaODboHejFTLTuME6_4rmwkAPkHd-YI4xMepP-GnlQe7BdEgj1IoMOdLhe-2zfXIcewwVfYj04NdlW8xa_3N9ccsmSTy5hwIyr6Ne7KNtcb-U95u8mCnaTeB6g9aAJRnREWDwWZOPapwlZrYAkJGBxMj5AykmupMFabYjijBFEu2900Kul8BbWj3nW-yqUvyqUwsCaywNRR3zDBZu5gyqZhLQ-z5h39AZX_qyzcOW_349xzqcOtcMP_ZhlKlfk_spDDAzmGSTH9DQz1WUJqM4ZVzonjLmw2j-eJd21VbbYGSrIxhVa7FG7KQyRCNmUW5aUUn98-XCgeRCJzMQitIyUV0QLMhXZToVHpf0tlZd4dPJnfrG95j0efLqV7hc1BsjMqZpI-hCcplv-rqE-QyBa5anJwh_9h5RicJqUQtGbMFBowXhj_iQPUhfr-waczL62OaRxiZjyhV9UpZIP--w1ZRuVmPFPK-UpmtqG_FQp-SvWrW2tj1Hzlxkal9Y0wcb_F1649Hj7ie6jY5lBKH4UPxsiDLuMYeOjMmid_-wDF44goPQK7Ts4RO30I-f24x4MfzRu9bOqVd8FuIwrgIbwxcAKRWAWtSLkOZMPcgYJAHH90derROBSRsDPV4LzQa0tbHTrROScS4k0Na_9RC8vkpL5mdYvvMi8pZkoazpz8fUll87jUjqbpSCNkOtAOk18JGIUEX2qi6LXhwbWlRiOSSvdiEtKig6rAC4I_XS3ez87owkLV8PwddUjyX8S8peqRtdi7NvVpzUnnVBV1k4WpqQCMd9v1gRy-RA2nET5G-DgGd8aVHFgH4ATupzjinOzkko1zMM8P37bk4QhIZ-enfReMN-oXaj9t7qcY_5lcP_gjfdpO-Gq0MlUWJVK9LkOW5FP_Ej3SpUd_FnZ0ReCS26iQ35zwUs4QUubwI8hOrwiw8K_lj6vKg4PD8zJVfkjn41mzgQxRnIJQuPtDss-WrW-0ouLjIQxOFmEt7HvmjnEjFRxJs4XCSyTiqxHp9xZVp0I9RdJakp11sS6xugjhOAow5w2bLkUY-WnZ8g9C0u8uLMeHjxqHWfs7bRZjGi3Xt57xVQApgLYgk2K-OCCb5keZulct6xj5eK7OmnZgdysh9Y8kok1T3hhzfvct54cLxsCcSh-JUBQo8D1EJZ5gFQ-A5DB32Kd7xUQYKileT0CK5gNA6xxzXEFsnKf_zrz_M-sz7pBTPr05JwaFfJsF5taP6W1dNGIfWIq7Xpygt2NcgAxfwto0LeKJw-XZrhYG9NjVvHUhu08G6jA_W-VgC0cbeeEY21ZnIckKmYq94KK573Jnsgimx1tAIuqtK_fJcM28U3iyVzlx14Zk2bUpq1fDvjQcHIaNPtEj6-dESSDnD4VOBM8WPRZBQ1FuHTWC4FW0prGEhA5tL8WXlrrW3JXYHCSy1eCA3n6MkMovY62TwC0x6w0oI0zMl9leuMu69AGd6nkoKoY7MVzV8ZZpSpYWlRdbxulOxpKVwY4HYPDOSM-sXW-g0LPNLNRP3yRvRthLIFIQFo6RJfCwTNjd4bqRDSKGkjd_85a9__vl75meui1Xy_5bWtLGMa697UyWw0PNd94xI6v9TTlONyX6sxW_MgUAhClM_9tA8_RWVerycPe2sJHUlMbdm2USwkvoGaaDg2InF7ERxi9WfGHmEnEKK9ib84N6lRzNHP5zsQwECgi6PX7dptnaRIzzLuko1uZ-u7DHfD6CTUpSOmIiQKtM47qfk5WEMfzBjRhpmcjFuueSRUkytbKs6uuvnJN0U_OHjitZFHe1UX6lfQOigNv3B9Upi6MiByxXNF337LFGBPV1d1mGrK5-RSmbb1zRqBEqIcZutyGj3uyC6stJI3cS-cwONbGtoMp-pVkzIpKDgr1-qH_Y0A8cBsPziHg95iwqBv6b0i4Fk3NYxkwYb-HFSV8TK1Gx6gAHy7g1AxexZo52_Z_7v_wAS7q8IQgwAAA==.eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVVTLUVBU1QyLUItUFJJTUFSWS1yZWRpcmVjdC5hbmFseXNpcy53aW5kb3dzLm5ldCIsImVtYmVkRmVhdHVyZXMiOnsibW9kZXJuRW1iZWQiOmZhbHNlfX0=";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    var config = {
+      type: 'report',
+      id: embedReportId,
+      embedUrl: embedUrl,
+      accessToken: accessToken,
+      tokenType: models.TokenType.Embed
+    };
+
+    // Get a reference to the embedded report HTML element
+    var reportContainer = document.getElementById('embedContainer');
+
+    // Embed the report and display it within the div container.
+    var report = powerbi.embed(reportContainer, config);
+
+    report.on('loaded', async () => {
+
+      var visualTable = $("#visual-table")
+        .append($("<thead>")
+          .append($("<td>").text("Page"))
+          .append($("<td>").text("Visual Name"))
+          .append($("<td>").text("Type")));
+
+      var pages = await report.getPages()
+      for (var index = 0; index < pages.length; index++) {
+        var pageVisuals = await pages[index].getVisuals()
+        for (var vindex = 0; vindex < pageVisuals.length; vindex++) {
+          // add new row to HTML table
+          $("#visual-table").append($("<tr>")
+            .append($("<td>").text(pageVisuals[vindex].page.displayName))
+            .append($("<td>").text(pageVisuals[vindex].name))
+            .append($("<td>").text(pageVisuals[vindex].type)));
+        }
+      }
+
+      $("#exportVisualTable").show();
+      $("#exportVisualTable").on("click", ExportTableToCsv);
+
+    });
+
+    function ExportTableToCsv() {
+      var csv = [];
+      var rows = document.querySelectorAll("#visual-table thead, #visual-table tr");
+      for (var i = 0; i < rows.length; i++) {
+        var row = [], cols = rows[i].querySelectorAll("td, th");
+        for (var j = 0; j < cols.length; j++) {
+          row.push(cols[j].innerText);
+        }
+        csv.push(row.join(","));
+      }
+
+      // trigger download of exported file as CSV file in browser
+      var dataToExport = csv.join("\n")
+      var element = document.createElement('a');
+      element.setAttribute('href', 'data:text/csv,' + dataToExport);
+      element.setAttribute('download', "visuals.csv");
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    }
+
+
+    // code to resize the reportContainer to the size of the hosting browser window.
+    $(function () {
+      var widthBuffer = 450;
+      var heightBuffer = 25;
+      $("#output-display").height($(window).height() - (heightBuffer));
+      $("#embedContainer").height($(window).height() - (heightBuffer));
+      $("#embedContainer").width($(window).width() - widthBuffer);
+      $(window).resize(function () {
+        $("#output-display").height($(window).height() - (heightBuffer));
+        $("#embedContainer").height($(window).height() - (heightBuffer));
+        $("#embedContainer").width($(window).width() - widthBuffer);
+      });
+    });
+
+  </script>
+
+</body>
+</html>

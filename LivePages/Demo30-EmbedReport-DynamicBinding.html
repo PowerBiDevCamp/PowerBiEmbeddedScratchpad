@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Demo30: Dynamic Binding</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.min.js"></script>
+</head>
+
+<body style="margin:0;padding:0;background-color:#EEE;">
+
+
+  <div id="toolbar" style="text-align:center">
+    <button type="button" id="bindDataset1" style="font-size:14px">Master Dataset</button>
+    <button type="button" id="bindDataset2" style="font-size:14px">Gulf States Dataset</button>
+    <button type="button" id="bindDataset3" style="font-size:14px">New England Dataset</button>
+  </div>
+
+  <div id="reportContainer" />
+
+  <script>
+
+    // data required for embedding Power BI report
+    var embedReportId = "69ad0538-a1ab-4897-bb99-cd3baaa17833";
+    var embedUrl = "https://app.powerbi.com/reportEmbed";
+    var accessToken = "H4sIAAAAAAAEACWUx66sWAIE_-VuGQlfwEhvgS184U3t8J6Dd63-9749s0-lUiFF_vVjJXcPkvznvz_8kJUybhkBjqaGgLWdEe37gepJxA8YCLIZIAnNGQlWq6rPFiqHg3FESwifklogONYNA4tSA0kBh0q4kpOl6nw-Oq1KIvGepMZ_V4HsTv2zXh-EE9DzdbtN9bazVJLvVvFY1r4BTpPpJN5biUYQB5X6kjhjVU_mnN_Kq2uqL2P1VA4MCtN2HDdPAWVpcBlCzj4Ztqs3BR3zgz_X7veusjpnViWfqguPkzXhGxoQ0k8D8nq1BLE6gDkghJM8I9lFi2zSlm_HMe1oky0dxsCP63PO4cq8HXZMqxIoV9KaOCYcbepN1NYcJrC3Ne3xrGiDUEABphsyyajCU8gHxKQhH-9rP_W0ltbtg14eM6JyPmqFEazZq2spo9MZTcdh_75Ve7Kn3ShUKpClOB9z4BSsqrpaG6aysDDVCjNYcOqNulLHnZg5YtBls6zXqFX1umFYBT6fY8d1c3G2ym3Ug4ycVLI2YlQKglFs9iU6qugbXw2fxikMS8OsHxB9aQWvpQoHiaTD0kAfviQXr1QvsFjXz1Oj9ldChd-ILMhXLqiJgE9LHoIwmPKICDsj-BIj9wwWzWfB7DCOG_WRVRz3-3qf-iZK_ect1Sg0vdfxAtAJk2bUCHRv8DQqOTQXjEZXT6IKl5ZzZYLcBVLrmWRg0fDtRYWjlj4ebHwaxUntDMkZSQKEJd2FoQgqwwepXvTc0HG9ZY-flUxDwlfH4bcUGp8EQStPlIS-gEIG_cJB_EA7rVtDCCEns2I2OeuijTkDTECpOaLpQHv2psoUOiOGb0v7l7Wy8CiZsbhvz36JsgnRTuMz1vIm_vz854df7mkDWnH_qiO3CRh1Bd0IytjE8-gN8GAJUsibBscvFYYLDeuLWaz4xR_e42u34UKMXXMxyfm2n1XtnaFMPaFbwPSG6IHWTIVQ-51AzPEyPNJ-03OZ3abLlwvPUQPN0iJroA2U9otR3jG5DOZ5PpdAhCl2cp3JLHxHgdfmQi5mmH5DHPnytvxC_IRyzSRMn54JJG7Ix5ooqjEkIc1uV8imiLBt8NVyVS48ec6xNP7iexXn0eIOSeIHCGuh8U7X-dOF2XbOyVRtgFeCUKHWld8TqDeWgNvuXf3uPZx8gT_0LZ_I-2Vxo5Bj3P6-RCMNF8e45jnGff0K-gH8Th0WLtW4TxBhVnBooOey6s__MN9TXSxK8Eu59bCWWw4boxTa1Uhp-Zff_1O_RzIm274Uv7FveWSBOxv0ZAnUPEpxcUviTrhWzKNpGT2WNWUW0AWWYK6vkNIdMuafYsfWQjAtejk8lStWeSdgvyhiU-iimS_9DjeD6vZgWVFyDp7413A3OPcrttSusqYA5jkYRPP24j5cJxRhW2s0Y1oT3TVbs5Zt7pIczCs34SNQJ9Ii8xMCpuGVnHyrIlZPnGDmleUgh0sq7sEx8DFyqBWIY2N3LzScpxg5e7zJJTLqMgQGVsGpe1JWpoyelD4od1wnlBSTbcAXoClip6_fOIrsH5G0cEON4xxsmDmHvLOjztzdEuvoLGOrrxNbxKvU-LP4hMPrXcewM0mWNi42_Ex0sgvf39q2_hfz3_8AZzwjiS4GAAA=.eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVVTLUVBU1QyLUItUFJJTUFSWS1yZWRpcmVjdC5hbmFseXNpcy53aW5kb3dzLm5ldCIsImVtYmVkRmVhdHVyZXMiOnsibW9kZXJuRW1iZWQiOmZhbHNlfX0=";
+    var datasetId = "ca6c991b-5bf1-4fa0-9aed-73d51680a82d";
+    var dataset2Id = "a80699ab-94b2-4bd5-bf21-3ff8ab80a2f1";
+    var dataset3Id = "b0505eb5-1626-4ed3-af73-4dd4f1af23ee";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    var config = {
+      type: 'report',
+      id: embedReportId,
+      embedUrl: embedUrl,
+      accessToken: accessToken,
+      tokenType: models.TokenType.Embed,
+    };
+
+    // Get a reference to the embedded report HTML element
+    var reportContainer = document.getElementById('reportContainer');
+
+    // Embed the report and display it within the div container.
+    var report = powerbi.embed(reportContainer, config);   
+
+    $("#bindDataset1").click(function () {
+      config.datasetBinding = { datasetId: datasetId };
+      powerbi.reset(reportContainer);
+      powerbi.embed(reportContainer, config);
+    });
+
+    $("#bindDataset2").click(function () {
+      config.datasetBinding = { datasetId: dataset2Id };
+      powerbi.reset(reportContainer);
+      powerbi.embed(reportContainer, config);
+    });
+
+    $("#bindDataset3").click(function () {
+      config.datasetBinding = { datasetId: dataset3Id };
+      powerbi.reset(reportContainer);
+      powerbi.embed(reportContainer, config);
+    });
+
+
+    $(function () {
+      var widthBuffer = 12;
+      var heightBuffer = 24;
+      var toolbarHeight = $("#toolbar").height();
+      $("#reportContainer").height($(window).height() - (heightBuffer + toolbarHeight));
+      $("#reportContainer").width($(window).width() - widthBuffer);
+      $(window).resize(function () {
+        var toolbarHeight = $("#toolbar").height();
+        $("#reportContainer").height($(window).height() - (heightBuffer + toolbarHeight));
+        $("#reportContainer").width($(window).width() - widthBuffer);
+      });
+    });
+
+  </script>
+
+</body>
+</html>

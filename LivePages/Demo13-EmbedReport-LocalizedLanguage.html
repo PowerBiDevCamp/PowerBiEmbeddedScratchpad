@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Demo13: Localized Language</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.js"></script>
+
+</head>
+
+<body>
+
+
+  <div id="toolbar">
+
+    <div class="radio-group">
+      <span class="radio-group-label">Language:</span>
+      <input type="radio" name="language" value="en" id="en"  />
+      <label for="en">English</label>
+      <input type="radio" name="language" value="fr" id="fr" checked />
+      <label for="fr">French</label>
+      <input type="radio" name="language" value="es" id="es" />
+      <label for="es">Spanish</label>
+      <input type="radio" name="language" value="de" id="de" />
+      <label for="es">German</label>
+      <input type="radio" name="language" value="zh" id="zh" />
+      <label for="es">Chinese</label>
+    </div>
+
+    <div class="radio-group">
+      <span class="radio-group-label">View Mode:</span>
+      <input type="radio" name="viewmode" value="view" id="view" />
+      <label for="solid">View</label>
+      <input type="radio" name="viewmode" value="edit" id="edit" checked />
+      <label for="fr">Edit</label>
+    </div>
+
+  </div>
+
+  <div id="reportContainer" />
+
+  <script>
+
+    // data required for embedding Power BI report
+    var embedReportId = "69ad0538-a1ab-4897-bb99-cd3baaa17833";
+    var embedUrl = "https://app.powerbi.com/reportEmbed";
+    var accessToken = "H4sIAAAAAAAEAB1WNQ7sCBa8y089kplGmsDMzM7MzHa77dXefXs2r-TVK_rPHzt7xiUr__z9h1cww4YjvCVuotfg8pDFL9z1eaRZGB6yCd3oHe0OopARBmYlz-TqcZHFa_qcvU8frwNmqlkKJ6mNfX9FJb3crnE2TS2WbKMODPwysX9kX4D2JBFh_YlEL1JichPb-mMKSTQHvuLAQCNvNaHSYXcdjQxILWrRoo42AB-XT-fH4efYIy6zVnCUL5y8KXLfJD_eQVMnpDzVWYiZ-WA5ypEiMkFkOg-mPF5YVfifI_tw0cHhSB7FiV3e7dB52g6N6Kh029ZOmSrTTCMCn2ZWuduPwwfzhZY6bPV9hhROLBC-_UteyheSeqS8cIqAvrIjcD4hhCdFIV9hjRtN5yOkVTfEkec6em_4-Bg00xZXJQLoi34lpxmLQkTXQf18tmHj2irnv-2Lozo61rGHp3B7C40Bo279UtaYp7aKjO6ITYspLGhRB88WGDWrUkVRQtYkB4fdSq-0Li09C4v43hU0k3VMv_aMhB67rahpVA1SVKnkyCH3wuu5L9rRCgEQj3BTZ5-jsUTd1XHFRpg1XAcil45ByLzpi37qvl5JSO-pCbpHfY4woRmGRK-OqN9tY0GDntJUC4uWIyoRFJiVygO5elg762sF1b1zs3PybjzbqpVCB1crrO4jts7AGzA71Wfh1xS8G7YK93JQYbay9EcPeF4pVwC1MsjP5-lSPxx1rDdjSfuUNKDPco4Nc-fWl-X3xD5BrDxIs1nxECc6Oh38fBFU6TVr-qFD0rRPjegIbuNo34NvD_HwIoPv7hGma1sRclsbVN72Ddj1SQDFh-2uE8rquEnt3IJa7xrOKbA04lAkFgesAbizZaUzLQq38fyypr6QF5IBbAqu2LKS6O1RlwybyqfM8BAAYJyNTu3VffOSQa0IDvSgkDY9IDh6BF-JO3QVjUKDULFZAkU6di13ue8Me5PxrV9mP0kmgl5DdXwKIHc6XU-dIeqaIpLcuxTuSgmvxwRh3yWNoOVkMfCNdfKEeSEqg4doNKjBsRCfR2hkKx7lOC3OVNeu0114G0cy-uAeE87jAO07bAjZAgG8WnAUmnDAJ0NUe1QmCtjW62ysbI-n4ijgYMNYT7ImRjzyWjvd8Y20hR-t4wUCbBthK-08CUBWmhuIKMh-T_W3JrrAGsKDMaXGynloQz1-L0at8OZn8B3NRyon54nrornakoi7NJ6N0a9blbdOpiR_Rgi6E3IbHhDXK2tyEU4z4xVX2N7K9xp4sQYSMcT2j7FnjzOh2YhFLoPe677zaUiYL2YuNaghdbytJ0GwHgsJo3Q3xJaKUCKIHODUObaCMEhC1zN48JeQzpa336gLym80EYCMxlIYN9M0dx5HQVtaOic7eacTQOVgmAAPh4E104jW-njp6dDxmTvNsODh4_wudy0VIRkKbxMXzalAmIopYzdnRiRwykd31ntbcIjZcivZNrHUD64TSFHiJoln9PUfww8i15-HicdeN-nXWYrEUJ4r9pEh22XCa0UaWuqkKhsEjdODDjiCy8C96hz_ADpmJoQJMugH9JMAb-OEaYkqZ-cn6X5mYClX8fR615duLbTwQ21nxgEWp_R7b2FZe_H7qLSDnLHAjVqCtMj9nPj0BzMYNFsNQWogS-VYHT6u-klzaTFMOZV_KbihLCYOZweXA5p3-zZc3JFNX5FHs5TZC3HnVYPwvw1pKM6waQYHZmQ7-TJJKkYAUT3NfctwntwDF1AH-AIBo9qAAEqdmn73PB8yckNNSutMWaITGFvX73GmhUvnhexl2lCXch7S4g04Gwy6VkDKYgsPekfmyTkfP0qUFoTqZrL3UQ_lUytDDVTA5-vUjAofO0ljjyZ7x9DJ-XGIzKpQPNHnDCaMD4DVzk7ZPclCNvTYarWtI9Wv23YkmI5KbQpXnVxEx3rEckRkWG8GSwKyl9p2iwidFCGV0Cm1tPd01mNN0YKKYCI67PwxenQDFkU6HUUpb13_5egRWWJYas86-hubWc9G5xpI2AW4X2dZ8pSsHrxnDM1-ENZEabSAjFB2-MM53raUGzRayUEzQmuRINZw9Y8sHGqxKJWB-Vq6JXxBodJH87ez9KzPTkOKSFagbUvsJTDVYHjolEDO9YmQKvEAVuxWNAj8dGWDJ-7anWHUqRj8ChCQXLOyVqld_URz7chNQ9mpQl8qM0AobVmzTua9gFd-IqCPk7iqy_UZs66NIbjx5kkmLbMPn_Ouq3LbrhHNozVmHIQo-mlmkjWA352ioXRMgiYlcPUJ4zNSOd5dMkYsPfXWtAK-hlpFYWIIyAJO2rWP23fvC4fxZ8SrJDAhJ4vHADnB-Vy3vSN-OmOrY_NBoRx5lplrLxNTE4XnUgDMVLQosCndYvsO8Dc4n_HqsZ1N-hinmB0HywHcUPCwiYtzyT9__eH2Zz0XrXp-cyr4QChuarvEcW1sfvvXLJvCzzubGxn9LPuWrvLwnsCygj9RiBZnhsJsfjDByeBceQvbEk63kwMFphqpiv3W16-fLi8m9Swifjpv_Me1KRC9Vh6gtrxMYm63zAIv_ZfvSBzme1J_uaHKuN5NxgMNyBBLcwpbLn6F81kUtkn9xjV22D0fRDXzK5ZTVaLS5b0wfpIalVxgdieriDF1DOxP8duFQOjSnRL2layJX7nLxigwry3Y1pehFyzZ-DKC2Jd3su_4oN8F60BR6a5ZMSjH9YXZZbiliIcvWK6UpiEU9qZgDLoYz1FgT0kN_sinZXvweZVB87SVcfrjdKxfBkp8m3CYL9z888-_ND9rW-1K-GMZD2-6dfLDxBfCAqPn3tU1dP6P8rpmzs5rr36wZY2So-S9X5s7hTD3xzcxWYSZQLZ4k7qDz-TEX-LnJ6O460bVRPIuX4tthmS0vzaThEIlHl7L1PNiOdWxxr94r4JlmcrdR0u4CTfjuqtyV9id0Sh4FDnqdsxrfpR2S60VBGmansDPXIvm3S0q--BQwt8QqeLcfdrREt1AzkolI8hY7EKTIuogASPfQEG96ReQhIi4M3LpQfRvC2GBg_IrzsbkTAwzjGtAfQVTEg6_iWFkr1O4hbMRORn0bz16BCylzVslKrHMWPtDGGE-xGp4gvAlUycBrU8L9p7IW4TE6EO_PV6S7aMbqhA4bgkGinnvVRBae_xTIB4_M6V6amSD0_eP5v_-D_W_PPFCDAAA.eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVVTLUVBU1QyLUItUFJJTUFSWS1yZWRpcmVjdC5hbmFseXNpcy53aW5kb3dzLm5ldCIsImVtYmVkRmVhdHVyZXMiOnsibW9kZXJuRW1iZWQiOmZhbHNlfX0=";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    var config = {
+      type: 'report',
+      id: embedReportId,
+      embedUrl: embedUrl,
+      accessToken: accessToken,
+      tokenType: models.TokenType.Embed,
+      permissions: models.Permissions.All,
+      viewMode: models.ViewMode.Edit,
+      settings: {
+        localeSettings: { language: "fr", formatLocale: "fr" }
+      }
+    };
+
+    // Get a reference to the embedded report HTML element
+    var reportContainer = document.getElementById('reportContainer');
+
+    // Embed the report and display it within the div container.
+    var report = powerbi.embed(reportContainer, config);
+
+    // Display Report object in browser console window
+    console.log(report);
+
+    $(":radio").change((eventArgs) => {
+      powerbi.reset(reportContainer);
+      var selectedlanguage = $('input[name="language"]:checked').val();
+      var selectedViewMode = $('input[name="viewmode"]:checked').val();
+      config.settings.localeSettings = { language: selectedlanguage, formatLocale: selectedlanguage };
+      config.viewMode = (selectedViewMode === "view") ? models.ViewMode.View : models.ViewMode.Edit;
+      var report = powerbi.embed(reportContainer, config);
+    });
+
+
+    $(function () {
+      var widthBuffer = 12;
+      var heightBuffer = 24;
+      var toolbarHeight = $("#toolbar").height();
+      $("#reportContainer").height($(window).height() - (heightBuffer + toolbarHeight));
+      $("#reportContainer").width($(window).width() - widthBuffer);
+      $(window).resize(function () {
+        var toolbarHeight = $("#toolbar").height();
+        $("#reportContainer").height($(window).height() - (heightBuffer + toolbarHeight));
+        $("#reportContainer").width($(window).width() - widthBuffer);
+      });
+    });
+
+  </script>
+
+</body>
+</html>

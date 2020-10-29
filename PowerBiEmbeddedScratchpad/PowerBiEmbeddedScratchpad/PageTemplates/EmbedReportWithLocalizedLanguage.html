@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8" />
+  <title>@AppName</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.js"></script>
+
+</head>
+
+<body>
+
+
+  <div id="toolbar">
+
+    <div class="radio-group">
+      <span class="radio-group-label">Language:</span>
+      <input type="radio" name="language" value="en" id="en"  />
+      <label for="en">English</label>
+      <input type="radio" name="language" value="fr" id="fr" checked />
+      <label for="fr">French</label>
+      <input type="radio" name="language" value="es" id="es" />
+      <label for="es">Spanish</label>
+      <input type="radio" name="language" value="de" id="de" />
+      <label for="es">German</label>
+      <input type="radio" name="language" value="zh" id="zh" />
+      <label for="es">Chinese</label>
+    </div>
+
+    <div class="radio-group">
+      <span class="radio-group-label">View Mode:</span>
+      <input type="radio" name="viewmode" value="view" id="view" />
+      <label for="solid">View</label>
+      <input type="radio" name="viewmode" value="edit" id="edit" checked />
+      <label for="fr">Edit</label>
+    </div>
+
+  </div>
+
+  <div id="reportContainer" />
+
+  <script>
+
+    // data required for embedding Power BI report
+    var embedReportId = "@EmbedReportId";
+    var embedUrl = "@EmbedUrl";
+    var accessToken = "@EmbedToken";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    var config = {
+      type: 'report',
+      id: embedReportId,
+      embedUrl: embedUrl,
+      accessToken: accessToken,
+      tokenType: models.TokenType.Embed,
+      permissions: models.Permissions.All,
+      viewMode: models.ViewMode.Edit,
+      settings: {
+        localeSettings: { language: "fr", formatLocale: "fr" }
+      }
+    };
+
+    // Get a reference to the embedded report HTML element
+    var reportContainer = document.getElementById('reportContainer');
+
+    // Embed the report and display it within the div container.
+    var report = powerbi.embed(reportContainer, config);
+
+    // Display Report object in browser console window
+    console.log(report);
+
+    $(":radio").change((eventArgs) => {
+      powerbi.reset(reportContainer);
+      var selectedlanguage = $('input[name="language"]:checked').val();
+      var selectedViewMode = $('input[name="viewmode"]:checked').val();
+      config.settings.localeSettings = { language: selectedlanguage, formatLocale: selectedlanguage };
+      config.viewMode = (selectedViewMode === "view") ? models.ViewMode.View : models.ViewMode.Edit;
+      var report = powerbi.embed(reportContainer, config);
+    });
+
+
+    $(function () {
+      var widthBuffer = 12;
+      var heightBuffer = 24;
+      var toolbarHeight = $("#toolbar").height();
+      $("#reportContainer").height($(window).height() - (heightBuffer + toolbarHeight));
+      $("#reportContainer").width($(window).width() - widthBuffer);
+      $(window).resize(function () {
+        var toolbarHeight = $("#toolbar").height();
+        $("#reportContainer").height($(window).height() - (heightBuffer + toolbarHeight));
+        $("#reportContainer").width($(window).width() - widthBuffer);
+      });
+    });
+
+  </script>
+
+</body>
+</html>

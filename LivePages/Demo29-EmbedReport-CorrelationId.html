@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <title>Demo29: Correlation ID</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.js"></script>
+</head>
+<body>
+
+  <div id="reportContainer" />
+
+  <script>
+
+    // data required for embedding Power BI report
+    var embedReportId = "89eb4194-661b-44b7-8975-2982e865b04a";
+    var embedUrl = "https://app.powerbi.com/reportEmbed?reportId=89eb4194-661b-44b7-8975-2982e865b04a&groupId=912f2b34-7daa-4589-83df-35c75944d864&w=2&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVVTLUVBU1QyLUItUFJJTUFSWS1yZWRpcmVjdC5hbmFseXNpcy53aW5kb3dzLm5ldCIsImVtYmVkRmVhdHVyZXMiOnsibW9kZXJuRW1iZWQiOnRydWV9fQ%3d%3d";
+    var embedToken = "H4sIAAAAAAAEAB2Ux66DVgBE_-VtiUQzLVIW9Hqpl7oDTLfppjjKv-cl-9nMGZ35-8fN79eUP3_-_EElQ0QjoXX9xSL7gU1JPh8vhCaMa6vfSSm1uOU20ZlGCvecFgtrLbSUBIExEl1hlGLxU8y2b4pXPcwQDiJf_OjbAPj6qMMaPIrsMjc3euOqcVlui9nM4worTGvGRfaahdMXZINRlVV2vrAMO4yVwNKyaCTPq72OIEGuUkhPxflefqNMW1VoF--1KYyf3BR9vi_GlYvMmGbn-_xuylW-HDR3OzH9cFyX-tV0aNO57x4aSzpHRpE6ro6BgCRxYI2ZMA2MLeEne3YqR-BnEqhviA0hPva7gcR7o4W7M2QJNVb743P5Bc-gIaaApzpd9gm1FNc0Vqjm-uI6KV6raQz3x1486SSYb70a9ByKKTK224E5p554lKy_cc82svK82fVFCeBQpIqdrTO5UI_ncD7ZRpg5Y6jGX8riOZLspnkSMBjVqiv3htvugKnX66wp9LZs16baVIZb0YsSVSxtdo45SMn3kaRI_UIMysP2WUyaeAetEGEoexGKr-Mb__5y5SQyHg3jLSs06sNWBDgMT-yrsnyTI83F6BlkfkUuaXIYayd9tz0ATXSRGqetdecqfkRdlafFa2M5tTUYWkzG1xcxrTNvl7knHKlNSyL35NC_PNXNdv30WL4r6uTTihkXa8TVbKX6kR70t325LN5WXzJRU_e0PNXqjlRE_FjPmq0BSRBblmTv3HT1zAEbx4yYWFMAI6pn4uLW6T9ojAa4asHRlsHjXI6IkRCPe7qvqE5cuwtaM0SlBOrF057RZKwluV3rONgfRpGr6dJcztFZkZXCevBKHHIQffgcBIwv3YeMvr00Jezwr58_fsT1nvfJrO5fdcq917BaXJAHdL57eDMDkgaXSl7twuGH-I7ilyy2JgjAHSjDiIjPOZ_MKCnT2N_khesjhHZXYfuKjnFszfpcKU80GKIy2AnzUANruObJ3jGVTsSn1raMH-QqLfXtyNX-1hnbIYUgTECsdJuDwJKOnEIB2bEZ-eI5PXVCc_L00qAlNIbPYvDEnGYrf5M0adV-ORjLZMUS-saQ7pqb3knYbcSs5qG7KQ6WobLkBOKaNfdO6QNRhidaEW5ZceUF3toa6pw5hhSc8p4ljarZSJMrxJXDgqjJXg835CGNeyktdsuOspqm8y_QkqlLSpTL9uAbAmw382UMGNUrhkrqk55Vrbz563_M99xWqx79UubNd4bXhrOjbSit8upJ58Pl_08FXTPm-2etfmMFPO0WvJbst5C2cEOe69i3JVHlUimyuRk8lmKZyHL-_Zo1ZPOXvIDMfIfC_KueRSyEt6hRd-Q3vGf0cKfmyQnFJsjzPePuzFzrBNA35IV9ZCheEfCt7wgIX6NVGmBE7qX1DlwqwfJ4TRhPguoNt-HUNr8UO_kwzfXEDDeJxQsIzZpSnBWIe9_j-0VPwVwJnUGpr9QwGbF-GOikQ3rxAZbWtGk17Tf4Ch9LK7p6iU7ZhfHupayqEOMg5M1RPwGVu45mQ6h-njow-rqwwwHFfJYQuoX-9ekgOknO1InXMeL3Y_N3J7wNJLhJPzaT9DFgjKN2sWIQnASEST4P-y4TXRb3_8b451-tEUaZLgYAAA==.eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVVTLUVBU1QyLUItUFJJTUFSWS1yZWRpcmVjdC5hbmFseXNpcy53aW5kb3dzLm5ldCIsImVtYmVkRmVhdHVyZXMiOnsibW9kZXJuRW1iZWQiOmZhbHNlfX0=";
+    var userName = "snoopdog@embedme.com";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    // Get a reference to the embedded report HTML element
+    var reportContainer = document.getElementById('reportContainer');
+
+    var config = {
+      type: 'report',
+      id: embedReportId,
+      embedUrl: embedUrl,
+      accessToken: embedToken,
+      tokenType: models.TokenType.Embed,
+      settings: {
+        panes: {
+          filters: { visible: false },
+          pageNavigation: { visible: false }
+        }
+      }
+    };
+
+    var report  = powerbi.embed(reportContainer, config);
+
+    report.on("loaded", async () => {
+      var correlationId = await report.getCorrelationId();
+      console.log("Audit user in app-owns-data embedding");
+      console.log("- User: " + userName);
+      console.log("- Correlation Id: " + correlationId);
+    });
+
+    $(function () {
+      var widthBuffer = 12;
+      var heightBuffer = 24;
+      $("#reportContainer").height($(window).height() - heightBuffer);
+      $("#reportContainer").width($(window).width() - widthBuffer);
+      $(window).resize(function () {
+        $("#reportContainer").height($(window).height() - heightBuffer);
+        $("#reportContainer").width($(window).width() - widthBuffer);
+      });
+    });
+
+  </script>
+</body>
+</html>

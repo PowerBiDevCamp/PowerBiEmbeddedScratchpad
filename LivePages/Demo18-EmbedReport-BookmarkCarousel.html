@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <title>Demo18: Bookmark Carousel</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.js"></script>
+</head>
+<body>
+
+  <div id="toolbar" style="font-size: 24pt;text-align:center;" >
+    &nbsp;
+  </div>
+
+  <div id="reportContainer" />
+  
+  <script>
+
+    // data required for embedding Power BI report
+    var embedReportId = "69ad0538-a1ab-4897-bb99-cd3baaa17833";
+    var embedUrl = "https://app.powerbi.com/reportEmbed";
+    var accessToken = "H4sIAAAAAAAEAB2Wtc7GDJaD7-VvM1KYRpoi8IaZky7MzFntve8327s4eo5t-X_-sdJ3mNPin3__A9mKaI3J0KSqJRtqgXi2PQYL5KqhtSqsez1X8s5pU5_qFovAEC8Pl15pNR4lTEjpso5yFZbfsy_dFV6XSJ-wB8kc9mkBdeqzF9S403D9TLoTxJiniukTIHjE7VL5qaiB0qwKAedNQaRzJrfrOnm0RWYcquszDsZktfn5j3fOUlLXyIiYeqSzDoOT2m6PIFnzxd-Oc6YsBpcinBNkE-9a7VKwiEVu1ZvwWa--6iC2TnxotbfraYO1ZQABlaCD0JnfCVOHalHw9vUI9oGIRiXjF6VUig905aT7OWiZFm5DECHvOGqUQL3upyEMZnIpCjO_qMkVvrMuN_-ZRdY1Fv5DU0o_SGeJ2q_QfgGeSKd5GIVkFSGg9oZucPREgQQqa7Z5p4tNERsurB-5gH094FOsMbuBS_JXedOkFX0ZueahxSdFWEq5WYVicatP0GIcTeTqznn_gV_rGJYsBHRX6EA35Gt3Kh0ctWBOuKWJyFgy8mbt4ys0te5eV6OSifsZo31FaFLR0kOjl5REXIJtiUPPCBLRoBUzCw9WZXzIlbH6sW4yS-jM7b9ck1qU34HwWwByqlz9k3mq8GqnY_wK0yiZTCUq0GeuTVUDh6smFB77jJDQnI6aYpQY4RCr_Kh-4OJmX8JOsOzV3D1wvdjkhUATpJodqZEHlsmI8Y4ecxU9sbxPAd8ZivrjIvrppxO3ThOjAmf-7gJaSc7J2HUsCexLVszgC-l9BQK01nZu22Cvzrw8kDWxy9wQ_-31bUjOFcnZbkind_lC3dN9VHA0z3y4mdJY26mmZZ38CSifDS2GTymBg_A-42gw1q_VBbD80cLY-3cGlxrjcVnZMGV6zhAllF8DGFrQzR38F65-_oaxdYO5qjWnxjFZcq9yVFFEC2YOYKMZUFXKn2ejFhMyAJHywL3vivgNUaUnmQIdmj1Z2lrc6V8MKEGdV18Y8NwD1s8fJoUtcY_p3RYEAumwQBsy1J_xfjEicfbGdgQ4eDGMPukkFYV1Ft_xezMMapc2MtD-hK2MnKjTOLqzT5DVmqItVsOS9pi3d9nbYNU2UbU6_HjR9HmxdBLdjZ2ucopBs4V9GnlVAfWzGzSdD-ESenGNmvoZdH_DKgI-pUl8Fj2EEOUf2u-cKLDzmSKMmph6vvDXn4VeGZ12s-Nwub9l3cqqj4KMUJFOfzhV-QhJ-PolHimNWFMPW4o6dmuPsjOL6H4vJfua3nDSeTgAO5tdIXL2D1Lr4fYq0jFbttsG8m_NIbP_Ef4PbKnEpRMesH10VUdDIBArTZF2bSIkNXjGjLD0avVPIuFX3YOYny8FjSyLVN98Y8zLcor1L9fngym7DTObbD325ZPmc8L4IyDgvJ_7JRDjTr08ytvCBfu5Y29aG9BM_SlqVLgB1dhSkYJNHFt7m3vYaa5GqySHD0_UGuVFZiLlqTq1TovcwEka_jAnXDite_u4fw5cyS91xaRGv0QKn3NQSrDi0rj4cvgSlqm_lJLNEt44RW6abPBRSJaPSY8gqkt-wX7Hz0xlrOSIN4rcO03odDVhK5QkxwYRxhKZdydQssQOSD76CVXyNllkRW7RZ9f4emiSty7XWOo3DAJb4K_l4eBscOuOvJucFsBZ-pmSeed3VqQcMCaUkH3KqOYmCMga_-gJhAelflSJnjYqbxhodctO6DiCSP1MTQzh7FFHSu9DHR1CLLE8CIVCv3Cj7bZssOduDe61W9arxB5qwcTuixc6XipEhEWfb8_rhzOmc_fTflIdvlO2GSQa9dNGDUJ3rfS0b4suQWpAc0sINeiuKASvhefKCw7l2PnYiLu_QC6YmE5VLpkAPVx8KwbuXgbTJTf7zFlvwEv6w_6rJdVTtoK-3jGQGyNDXlUAvgOpt021iiHpqir7ZIUPjcCnnYr2yCDlK-OYYxGy8Nf16Mtm_h43UlCutkPWVxuKE8O9EUWRSW1m6oJpawlkIMvTv5XwRPWck3Fh-ZhLV5JUY6-sUun8jeFvKehbSDlS2beX813Gf0McSd2dHZ8MN1W3H1mc1BeBEslcg50x7vRm3XWXXreMJrKEPZ2Gzyrmov1IAcQfZy83Tzr5Lm8CrhY-dUL0OK5_numPWLw2vaWXHrTJH0Qqp3cC-VdMW9HV64waiovmyvatht8Z9C8qiT7-GfoTyZbGT3efFT9oty6-lZfvHihfNICb6mnhWsnfkZ--T9FHR4c3AcphiMTJ-r0zHeK0zPRmMlPKiA_G57Bkpm-x5_sjGoZSO7lcENEcf-hNwf5ujLN7z8FRGGcie4DaDRWJz5K3uyZTfc4KfmcJK5aUS2am8fmKYiBYbrmpwXxvuzkK8Rcw4cjhO2ZismoFJCkJme4_NlHvaWV1ZRAWRryy2k_651__cNu7HLNavn9zarwd6zVicYDzFn4u3vI_u9b3mFbYBZMAaplEc4AIOiVrWrStnziCt_83H-5bpenaaCKTDAhWwQVPtspfY606b5HbHwCnMkCzSX1y8fxirddNuAW53JCc5MWDD3ENGHCCJxXsgz7CDEL4ICFo_qnYvobqgIozxnIn8c7tUQdIuT8rx8WEocYx1XIptIGcyW7bVsjsKLmlS4pQhdbBA9u3pwln1ZNqesgpYxb8J2FIxsfsdiJPm9B6GPCXZMfbbhDO5RzB_WmnB9xHBa6PEme_rOHWbMpD-9oTDeO5vGZCz2HOUFgl6bya7WYqJo5Q1mLRYF6xI1KSC-oZug4LJe85h9vt__znv5jfpSk3OfijTH7Z93QoXYl3gVr41cH7jdb_r3LbekqPcyv_ZPaR0iu70qG3msbDI14254U_gqe86fBEN3Y72bxRPKqiZxsk7UFaW3Sgj1v6NrJvYHB2z2Ui1d46vLVST9YECeTA2btxjWDjUUDghoVfeRtLRs0MZa4dboedoecdS3C-kDYMOHFuxyTtFs4u75ZgRf2tkBwBeILN5Yzd-lePWXxJavIz3h2QKtdiRM6VPfk5o22iZVUHMKQgxGlKz_nfDmdqWAUwixtLeFG-QXtnwvLFsBdhLOL_-h6RKw6muIu3GQZArmUMLpqNfFOJxj0qtW1PHPL0sWUILP0pyYi3QnJoOlJrrn0TFB5BZ5IpxVctuhgScE-0fy2eJ9NsVowLZnv6X8z_-38eSXdoQgwAAA==.eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVVTLUVBU1QyLUItUFJJTUFSWS1yZWRpcmVjdC5hbmFseXNpcy53aW5kb3dzLm5ldCIsImVtYmVkRmVhdHVyZXMiOnsibW9kZXJuRW1iZWQiOmZhbHNlfX0=";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    var config = {
+      type: 'report',
+      id: embedReportId,
+      embedUrl: embedUrl,
+      accessToken: accessToken,
+      tokenType: models.TokenType.Embed,
+      settings: {
+        panes: {
+          filters: { visible: false },
+          pageNavigation: { visible: false }
+        }
+      }
+    };
+
+    // Get a reference to the embedded report HTML element
+    var embedContainer = document.getElementById('reportContainer');
+
+    // Embed the report and display it within the div container.
+    var report = powerbi.embed(embedContainer, config);
+
+    var reportBookmarks;
+    var nextBookmarksIndex = 1;
+
+    report.on('loaded', async function () {
+      reportBookmarks = await report.bookmarksManager.getBookmarks();
+      $("#toolbar").text(reportBookmarks[0].displayName);
+      setInterval(applyNextBookmark, 2000)
+    });
+
+    var applyNextBookmark = function () {
+      // get the next bookmark from the bookmarks connection
+      var targetBookmark = reportBookmarks[nextBookmarksIndex];
+      $("#toolbar").text(targetBookmark.displayName);
+      // apply the bookmark
+      report.bookmarksManager.apply(targetBookmark.name);
+
+      // advance nextBookmarksIndex variable
+      nextBookmarksIndex++;
+      if (nextBookmarksIndex >= reportBookmarks.length) {
+        nextBookmarksIndex = 0;
+      }
+    }
+
+    $(function () {
+      var widthBuffer = 12;
+      var heightBuffer = 24;
+      var toolbarHeight = $("#toolbar").height();
+      $("#reportContainer").height($(window).height() - (heightBuffer + toolbarHeight));
+      $("#reportContainer").width($(window).width() - widthBuffer);
+      $(window).resize(function () {
+        var toolbarHeight = $("#toolbar").height();
+        $("#reportContainer").height($(window).height() - (heightBuffer + toolbarHeight));
+        $("#reportContainer").width($(window).width() - widthBuffer);
+      });
+    });
+
+
+  </script>
+</body>
+</html>

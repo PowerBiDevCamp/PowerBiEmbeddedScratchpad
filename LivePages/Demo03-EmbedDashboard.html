@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Demo03: Embed Dashboard</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.js"></script>
+</head>
+
+<body>
+
+  <div id="embedContainer" />
+
+  <script>
+
+    // data required for embedding Power BI report
+    var embedDashboardId = "c2d667f8-1023-413c-95e4-138b12950013";
+    var embedUrl = "https://app.powerbi.com/dashboardEmbed";
+    var accessToken = "H4sIAAAAAAAEAB2WRQ7sCBJE7_K3bslMLfXCjGXmnV1mZhrN3ad69qmUIjJSL_7zx0qffkrzP3__ie6coN-IBxz2UTCbV7NZSsZkQqCcDAIn1YWxLknWG5B9TlE3Nr6K4KAum2xciOpQcDuuo2bfBakA-ehUwUNUrk2U0e3atz-WeQ6nkusUCBdthFjqAVrlIr1Ga71oCRSzokzJWX_P7uPjaG_2o6CPlaI6-sYpiolcHg0hZUMpSWYCHl2v37mQx8644GwuDS4HTugnI9VoLUa9byTv97fEeLpvNtt48yjhnMq23Jv0ui58PTw-7dVeLovSN0hyBS10OWozTmI0fNt_NOgiO3rjlvGK08x4SuwAWSVTWYhbYlsJvGVF4LxbT1m9cFZwRkcLTpHESR_IJqaGDjomaDLt0MW_pfl9tCjZsfHJtgqtqa0m8xuUUdxxHygx7S1iylGiXMGWtz4Mz8DMKE1pJmTHkB3ApGytI3LBT4-3rXjiY9pCvIXJWy8VD060wfF6aTkTSrhAP8ztbtsQvXLIx01hz448r5FnH_pZ8gMsABTwTgo8fvn4W7zm8_hbTA2QtyjiEjp3eZvtl1evRi1PULoi8rt82LODdO8SbK5ndvX7tpiTBvoTNNtHS_R9b8pA6Rj03pyB51zdC4Um7RaSBDeVLPHqlUtN-xLdKQdvr3iOiu4duaXpVKV9iRJIZFGvw6hw7E8BYe2poUjAhAwdCdOlXuD-9RolKajmmAIzbG63T25T8AJMx58D5fS5hCd09kmLdqB24HnYEMVhyfpar4UjBSioz3I-s1b7dSx4aWCT_Ul-_ReVGKKE2GioxBBiHjmb-vPo6Slqq5k_MMBJfaqQb1yh3NvDtrEDv0ka57ocnp5tF_uBE7nIa7MRC6nUs8ugkN89L47NE9AKohG6NimWPj4y9RGrRp1WssVXiVhK-o5aMWOEGHc_3LUVtNmDZueZUFanxSSTQf_K28MAn28aTQNcbcxMTsc07ZKtqJSAUxDZmvXSt7EJOJrrhUphRMTahPXsXTcA9qVYZwZQHiqoWWnOe5iu9-l6jsk2EZ6UFgcjl3Wh49Y1hJQ2r-ytD7YFsO_s6hlURNJSkKCyqBWVNwMMBrwvUNt6w3m_m7q-l6S39qPVCIqNuPcsQIPpRKpHggKoKwpyFZoMBy8kCCD66qtC2FgTib_1zhMR4Lki7EZcjKqB63rOSrFlMcumAdhsEZhJQShhUH4DrYrBMbkor29KpZlvgMURaePXUC2GdP1oS_XeLOg44UYxfSBSKcbvYf6pP0r_xDUCp_5A23GBB9S8hkOjMv0u8kPI6TC8nDhjnQMXDoPxdX0lP8JmqHec3cLFxSNJ-zSlx8BN0xa3bZNiM-MlFBFzwQCcBj1MldiD7Wbwd_kuvcT1Ie8FRGg5becucLXPTne0V6E7Tj2ltZMaDJZuxd2h6fkdWC5wxsZhkBalJYhdJ8dXkpZg70P4cAXMFPJKhWx0LemmU79MYVdvfIsUMNArEX2m3amEkXurmeWHbnqeVbfOEAPx5_oSnzUvgJJziZ205uKQv2-HeZSxYhmhw0bXyIDgh4hq4tjG9csJYT-BbtkpGDtNkxz1o1OeikJEU_QFAZyNhSYUpi3cyT1e_Cm32tUbZiitybKg4JckNn2KMyrthqdriD6FLFpMWQXCfNvNN7Xi7W4TFnfYzQT_mA4L7rX3AbcY0tf7Spd2vQw6orxaE-ys6eYch9oqwngCR3FDzELkCy9yH7AiE0Jk-ZwTeHKH0-aXzsWahYPz2CgHBicWLfe85Yc9fMmnPz6JiDx5r4KYszzBpJeXR-Xp_Tngt568ngkj2iSgwBrLA4bL7tzP4NQFaRdw9czoJVJMQgglDWk6AjQGkaVsQu1XETFr1YNazsd-hPM5-FB4OYXEjSpSHudos9RTkQOOQIuviFHz8amPbCUyVwrs3eJhhAiEhwjguMKLiVfWlxsm3uAE2e4_yvZwpVrPVSjA0pagY13QbiIVkCd8tXkQdx2TCn4PUEwocRWGEKVeJBBGdZ6wuNgHV-5e0W0czno5njmk4xIKN0uaIWZ1uCzcBvWIdBDwdYmWpvLzsXML_3gFb9_BCM3aO2vyzSX5Pp7KO0aYFkTYyc8eo-QnrMswFJhWYUKATc42lSnuhMgPs7B0CKEOBBsv-nPlLmFdPZZFbKEsvl_Tf41dO4I77BONzGDdxYzKtEHcarY4jbkoEKstalLS-9RVhKoVnf_ChBlSCJMkDedc5Uvuyey2No_EccYVxQ2iobk_oDdwfF-0RaPToCb4TRcEP1AfQEOp8HrUtVdtOzfP60zXLeF9gvUcoW5DoU5bMrM7VhmQWSMQTJFN57YoMg-RWqaJKauhzMytqFeqL0JIflS7iK8QIa8huwIKhJKiITVZJA-qLeRLvs-KAc4S5PjdTDg_osbRx4s37cb489cfbn3mfdKK51engg5vc7PIs9872t_SNauzuCDo6VTvR3jV67alBsHvWvc7-uJJeS7c_VBpogHJLU_AeYxZc8ZM7RWiaWnxbqphc0pR4ALPbJsBcEcCvNWQsXDs79StozD-loO86lTdAi4mclumpzZVDo7eZmIXfjpj0RWMlBipa0MVo2e8HmxbWx9RLZAakN3UhYHcIWT0tjCM98Li6d_MZ-newnmUX4Z9d4baOGx2m50exhpytcn7vNDqRuUeZ1OPzSlx4EMfsNhyPRAtV1lwQWOCbtbHPkx1jch4tY6HcXA1cTr6KX5Ss1CxiD6kelLg2GHtu7BFTq3KHFgp2dZL02MUGVa1T5pHFmT_88-_Nj9zXaxK8HN5tT5Jpmf74htfa_uVs6u3VOb_U25Tjel-rMVvTEXpH2QsyPTsBnjrUv3CecE-fKcpz_PBLd6v_YRu6b12Daki8wjvPdP--FJ41EHa12rzmXVzu4T6ilIr1yXEAnV-p966aJXipwH_rK_Prxhos9ygVI9HTzlntb9e9Wh79BlchyQYPGYNsWxjyDiDoQzINGHz7QiRf486tK0PjEhSluoJX00SDmO_ZztV-lKjQaOpFO4334mwVY5x7PtvVCVcABPmZ9BWpjOM_LS1XM-NSSq2mRM_ezGW-pG5x_gCjwCl9nfKG2ANaSntg3QN0R_gHU30af5kNEfFcEuk5aOwJWOOgVtloAo5IM5HUQT4oQ5uUF-RauUaf78YujSMjnR2_Wz-7_8A82Po50IMAAA=.eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVVTLUVBU1QyLUItUFJJTUFSWS1yZWRpcmVjdC5hbmFseXNpcy53aW5kb3dzLm5ldCIsImVtYmVkRmVhdHVyZXMiOnsibW9kZXJuRW1iZWQiOmZhbHNlfX0=";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    var config = {
+      type: 'dashboard',
+      id: embedDashboardId,
+      embedUrl: embedUrl,
+      accessToken: accessToken,
+      tokenType: models.TokenType.Embed,
+      pageView: "fitToWidth" // options: "actualSize", "fitToWidth", "oneColumn"
+    };
+
+    // Get a reference to the embedded report HTML element
+    var embedContainer = document.getElementById('embedContainer');
+
+    // Embed the dashboard and display it within the div container.
+    var dashboard = powerbi.embed(embedContainer, config);  
+
+    // Display Dashboard object in browser console window
+    console.log(dashboard);
+
+    // code to resize the reportContainer to the size of the hosting browser window.
+    $(function () {
+      var widthBuffer = 12;
+      var heightBuffer = 12;
+      $("#embedContainer").height($(window).height() - (heightBuffer));
+      $("#embedContainer").width($(window).width() - widthBuffer);
+      $(window).resize(function () {
+        $("#embedContainer").height($(window).height() - (heightBuffer));
+        $("#embedContainer").width($(window).width() - widthBuffer);
+      });
+    });
+
+  </script>
+
+</body>
+</html>

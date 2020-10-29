@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Demo31: Create Visuals</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.min.js"></script>
+</head>
+
+<body style="margin:0;padding:0;background-color:#EEE;">
+
+  <div id="toolbar">
+    <button type="button" id="createPage" style="font-size:14px">Create Page</button>
+    <button type="button" id="createVisual" style="font-size:14px">Create Visual</button>
+  </div>
+
+  <div id="reportContainer" />
+
+  <script>
+
+    // data required for embedding Power BI report
+    var embedReportId = "69ad0538-a1ab-4897-bb99-cd3baaa17833";
+    var embedUrl = "https://app.powerbi.com/reportEmbed";
+    var accessToken = "H4sIAAAAAAAEAB2WxcrGDJJG7-XfZuCNy0Av4u6eXdzd08y9z9e9L6jiUDzn-fc_VvoOc1r887__uHlQNrPLe7Z3zkdhndDN8Dhrkq5qI7_RD47HoJwQLmXiaqmgkqKugO0OI2D9fjaiZFVeFxhKJstHZa2y5lnGFcdh64uySgI7Z2lg5KD9kHHMe7JiEGe9KYxPBeko9wXFSG7OdofYU3AV1iP8B_gYlUuH1i-ot5uqQEcSLFVR6YqT8eIGGn8jX9nc5BVOg10Z0QNtzRJr3YwmsSz91wx22PgmbRMyBWibKN2_HnMcH2cjpy1-WQ1K1_bmtNZIS3y2C4bh5CFf3RKSKJmp4Cz_3SVdvROlMI4-ST4r9hWkKs-W0W80KwRsKWOAMoY7Wed3H7Pj8NOXwPeJbThMbw_V7nJBYpFlsgILobqw4ouv7CZmt8fZoJiC9e4c5RT_gXz5RLedxtB2uRxrVpI-8bOHUGoaUHdMheK21wXM5U3B4cPLnZybZlqtgc_XXM1wJiJBf1VnZfCM9-MV0aRHv0LBEuQ3MPCx4gAayXBKJfk069FzTo5FYXSYi5UyO0Jgw0Qy90T4jOI53jsFeR5Dks0FQC6-1S94j0ynsctdWLRbnJ6l_DAyShcgykIbZKv0tLZjckYQP1NH0PSZ1LzQvVQc2wa5f5rLrH4vCB9oovuNTlKdxGya1M4zi6rLhqOoCC_s6zowEFrY-p42BycbL8XnYVuvjTI_X5r7mSyOtpVi2KGmFyirNcLW5Jb2-QStZVVIn8noIrUNbEo3_nf3oyh2hf1rWpTe-iV4HOSOKpXmubyVcqR6v4-sHSWK2tYEsDoQbMpVy5nOxLBRsmK-XYx5VX1gcBQ-EQI15kPICCvMYF_OuQjlTY-CqvPtSL5U5lB8IZSCxoq04SyMb18UP4IaP7rnaKg1RXttvSLXMRkCPGSSzeFW04f2iMIkwxxf-6Xg03hXR88Oedfj4rc8aQJ2I7DDiQ7Y29Ga2wD0rjNA7coN74bwt-1Dzm97sY-6ypUo7RrrcteJX7HYqEk8w4huyoCuyRkj28qTIiSqYeVNPQLSy7vEUqElZxl4mvMn5w2FS7xfqZCDrviPcxvcNEvY6ptri7nz09rm2cVo-1GtD65KS4DCMITeKzuW0fs_SBbMw9pq-edvYBwQR0ofCY-BtHtyXWhVzMrIwpepw53ZRpbjkW_6A_jBdc2X_LF9fX-yBPDNKl2K9pzTz0iLE2Bn_is3WKwN-C2hAmcUhVMfbH-omK4cNQBv5GzygKM981oCjo-ZtK-Q5O-zeS113sUeDznQaImWibpNa0cDek6hDnB9cUljwE3BbK2deLK-0DmjkIAqvM72rN7EVy7_xV42hEID6jW7G0S9aRvfJlMPmL133qS-S5mTPkvmOXjyx_fnqH0YQpUJo63P7rJCwllrQJgcdUbNt2SAz4SqucwaQPjngStqhX8ERx96vOiFvegDJLZCAdDqeqQgQSH8Xr4OaWWyeexJREEaWghWTI8dyUOaa3kJ3gw56AZ5RLVgk2roIVzQNllFazrp9uiX6cCZEx_hCVOCxsjEjZhASNiyFG4J4sevtTzZh3uiKdcr_1oYd3ijDbOo4KynL_Q4grWXjqsYRc07vagayO9JGlUEi3Z2JdOqVQluIVR5l60RCnnt1mRhAX0oP-T9nTF09zrwWsIR2yd1DQIwFIfxFqWgXWysd6pjeXItLuiTw-MrccJIW1h8fR8hl7ZdlORnxwafL85amy-H8EJAejmvJ_B3WfV-CA6IR14XMjtuySeU-sl81rMm7t4LBoLCMj_XfYCATRYzsUIB42btEa1W-4BaTKZXtAecJqQoY5QKjM8pD6FlkwtSfDRzXiR5c4PuL8oTU3eoMl2IBhCRsX5tdvFPnYCraji0zVmjF6VkFffv_Ep0-D5SURVerIHESfiLU0gW6UQcCVasMdFHqtuAhcLIYin8W-p43VMyyiSYVRKvY2lPP5drhCJe2IvHDJBsE0ovaAkpcc6aLG3kJYE_OkHUsr4W5QmV4wNxERxZ_W9cH15q-9_mYNMBuLDmI3XUrbunMNBD2La67u-RkzAkFR0Vkojyzc4us-w15YV7RomBHlz0G9xHSxFlkTByLQt5OnqEd5r512kPOJiO9QZTj-JAey2E6XGRyOKOpGD7vfiHURC_Nf-e5saOw3zmg5PeLOJMjKOchCz-tJ6fV5nv5wcHoBYl0p3wamRjbne14eGLDnkthbFJRMDOXas_KMSY-TtpqTVN_MKYbXYBG4uwjzId0yKL-xBiLAxbf4oGSugdSkDy5YFeEqA3oGrqlJuo9D4KKcTbS6id62qtTTnoYzQ4vRnOFyY8hEoYqtSkK9-fkPi0WIQrOTtCZNRB2fjGzroYPzFINrOu_4RhUjUHWLE9sOznnkUud-NF9JKUPcFFpq-bOpo7gf_8zz_s9i7HrJbvX52y9CIc84xjyeI3zO7vpVUC6XiJmvSTtuiGBdGGNvno2keaxoLn7TTwRJ6QqZJ5YG098Lhj0CZeH_1NMddutLA_yZuDLQ9zz--161XHfkzxxU4y4UPG7LjzqENey3vLu9mJ5T0dB5E4iVS4ayqcJBz5nsT7tOcCjNglFNXo46vIToAhrO0lipAZ9xOccdgNJM4fpw1ew3W1RS7TyY_VVNZQUOCoQB0cfOy1JMCL-MRScedqYMirFsyJA2P5pWo_V6rUVV8sM01rhrNqYht2JG6tvKbgDGbl2X0f4zKli3CXJGcq6UqxOMwD0Yh2fKTD3egD0L_KOKdrxG_zp1f4U0fD1P7Xv_6D-V2acpODP8r3tcMTMwyVT-NGxnsiJupU_d8pt62n9Di38m8s1Df13cJM1V-Hew2RHim9_0uzZB0kEsqUZDUHjPHax60TKaQDfrg8mNu3DLGfvOSQgJC15K-UkoTL9eFoOn7Z-DNIrNhofoeE42PGppP4OtS1wsET8qC3cWOstBDNcM3UdzhopJCBMDLz5q8uylf1QRbzGB0wPNluTUOdWoAEyy3I41PnLvAjeKcHzFw2AZiVAMHW2fA1CQutGOdAd31Ea9WP-6sDtNyDCAhB6aKg_rWfTFYYYefcR7isczKaMH4Wfw8juybMY_gUa7MB51vRNPr9x1VnvIJTUlVGm3MvbW0Xnt3Oo3qj8U7OeSLqC9DMet87mizvzzoUnQmh4Y1OQPb-w_x__w-JDWJ8QgwAAA==.eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVVTLUVBU1QyLUItUFJJTUFSWS1yZWRpcmVjdC5hbmFseXNpcy53aW5kb3dzLm5ldCIsImVtYmVkRmVhdHVyZXMiOnsibW9kZXJuRW1iZWQiOmZhbHNlfX0=";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    var config = {
+      type: 'report',
+      id: embedReportId,
+      embedUrl: embedUrl,
+      accessToken: accessToken,
+      tokenType: models.TokenType.Embed,
+      permissions: models.Permissions.All,
+      viewMode: models.ViewMode.Edit,
+      settings: {
+        panes: {
+          filters: { visible: true, expanded: false },
+          bookmarks: { visible: false },
+          visualizations: { visible: true, expanded: true },
+          fields: { visible: true, expanded: true },
+          selection: { visible: false },
+          syncSlicers: { visible: false }
+        }
+      }
+    };
+
+    // Get a reference to the embedded report HTML element
+    var reportContainer = document.getElementById('reportContainer');
+
+    // Embed the report and display it within the div container.
+    var report = powerbi.embed(reportContainer, config);
+
+    // Display Report object in browser console window
+    console.log(report);
+
+    $("#createPage").click(function () {
+      console.log("Create Page");
+    });
+
+    $("#createVisual").click(function () {
+      console.log("Create Visual");
+    });
+
+
+    $(function () {
+      var widthBuffer = 12;
+      var heightBuffer = 24;
+      var toolbarHeight = $("#toolbar").height();
+      $("#reportContainer").height($(window).height() - (heightBuffer + toolbarHeight));
+      $("#reportContainer").width($(window).width() - widthBuffer);
+      $(window).resize(function () {
+        var toolbarHeight = $("#toolbar").height();
+        $("#reportContainer").height($(window).height() - (heightBuffer + toolbarHeight));
+        $("#reportContainer").width($(window).width() - widthBuffer);
+      });
+    });
+
+  </script>
+
+</body>
+</html>
