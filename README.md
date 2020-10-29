@@ -28,7 +28,7 @@
 1. Download the project from its GitHub repo and copy the top folder to your local hard drive:
 https://github.com/CriticalPathTraining/PowerBiEmbeddedScratchpad/archive/master.zip
 
-2. Open the PowerBiEmbeddedScratchpad sample application in Visual Studio 2017
+2. Open the PowerBiEmbeddedScratchpad sample application in Visual Studio 2019
 3. Open **app.config**.
 4. Enter the values for ID settings using the GUIDs you copied into Notepad. 
 5. Open program.cs. The first method should be uncommented
