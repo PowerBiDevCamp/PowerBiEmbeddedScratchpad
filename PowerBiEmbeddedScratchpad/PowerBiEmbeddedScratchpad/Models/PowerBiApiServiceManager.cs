@@ -180,7 +180,7 @@ namespace PowerBiEmbeddedScratchpad.Models {
 
       var report = pbiClient.Reports.GetReportInGroup(workspaceId, reportWithRlsId);
       var datasetId = report.DatasetId;
-      var embedUrl = report.EmbedUrl;
+      var embedUrl = "https://app.powerbi.com/reportEmbed";
       var reportName = report.Name;
 
       GenerateTokenRequest tokenRequestAllData =
@@ -231,7 +231,7 @@ namespace PowerBiEmbeddedScratchpad.Models {
 
       var report = pbiClient.Reports.GetReportInGroup(workspaceId, reportWithRlsId);
       var datasetId = report.DatasetId;
-      var embedUrl = report.EmbedUrl;
+      var embedUrl = "https://app.powerbi.com/reportEmbed";
       var reportName = report.Name;
 
       GenerateTokenRequest tokenRequest =
@@ -254,55 +254,6 @@ namespace PowerBiEmbeddedScratchpad.Models {
 
     }
 
-    public static ReportEmbeddingData GetPaginatedReportEmbeddingData() {
-
-      PowerBIClient pbiClient = TokenManager.GetPowerBiClient();
-
-      Guid wsId = new Guid("8ecc4996-2746-49c4-a378-6ce0519c57d0");
-      Guid pagReportId = new Guid("3ea30594-2470-4be0-8557-023fdb9c65e6");
-
-      var report = pbiClient.Reports.GetReportInGroup(wsId, pagReportId);
-      var embedUrl = report.EmbedUrl;
-      var reportName = report.Name;
-
-
-      return new ReportEmbeddingData {
-        reportId = pagReportId.ToString(),
-        reportName = reportName,
-        embedUrl = embedUrl,
-        accessToken = TokenManager.GetAccessToken()
-      };
-
-    }
-
-    public static ReportEmbeddingData GetPaginatedReportEmbeddingDataAppOnly() {
-
-      PowerBIClient pbiClient = TokenManager.GetPowerBiAppOnlyClient();
-
-      Guid wsId = new Guid("8ecc4996-2746-49c4-a378-6ce0519c57d0");
-      Guid pagReportId = new Guid("3ea30594-2470-4be0-8557-023fdb9c65e6");
-
-      var report = pbiClient.Reports.GetReportInGroup(wsId, pagReportId);
-      var embedUrl = report.EmbedUrl;
-      var reportName = report.Name;
-
-      // create token request object
-      GenerateTokenRequest generateTokenRequestParameters = new GenerateTokenRequest(accessLevel: "View");
-
-      // call to Power BI Service API and pass GenerateTokenRequest object to generate embed token
-      string embedToken = pbiClient.Reports.GenerateTokenInGroup(workspaceId,
-                                                                 report.Id,
-                                                                 generateTokenRequestParameters).Token;
-
-      return new ReportEmbeddingData {
-        reportId = pagReportId.ToString(),
-        reportName = reportName,
-        embedUrl = embedUrl,
-        accessToken = embedToken
-      };
-
-    }
-
     public static ReportWithDynamicBinding GetReportEmbeddingDataDynamicBinding() {
 
       PowerBIClient pbiClient = TokenManager.GetPowerBiClient();
@@ -319,14 +270,14 @@ namespace PowerBiEmbeddedScratchpad.Models {
           new GenerateTokenRequestV2Dataset(dataset3Id)
         };
 
-      IList<GenerateTokenRequestV2Report> reportRequests = 
-        new GenerateTokenRequestV2Report[] { 
-          new GenerateTokenRequestV2Report(reportId) 
+      IList<GenerateTokenRequestV2Report> reportRequests =
+        new GenerateTokenRequestV2Report[] {
+          new GenerateTokenRequestV2Report(reportId)
       };
-      
-      IList<GenerateTokenRequestV2TargetWorkspace> workspaceRequests = 
-        new GenerateTokenRequestV2TargetWorkspace[] { 
-          new GenerateTokenRequestV2TargetWorkspace(workspaceId) 
+
+      IList<GenerateTokenRequestV2TargetWorkspace> workspaceRequests =
+        new GenerateTokenRequestV2TargetWorkspace[] {
+          new GenerateTokenRequestV2TargetWorkspace(workspaceId)
         };
 
 
@@ -380,6 +331,55 @@ namespace PowerBiEmbeddedScratchpad.Models {
       string embedToken = pbiClient.EmbedToken.GenerateToken(tokenRequest).Token;
       return new ReportEmbeddingData {
         reportId = reportId.ToString(),
+        reportName = reportName,
+        embedUrl = embedUrl,
+        accessToken = embedToken
+      };
+
+    }
+
+    public static ReportEmbeddingData GetPaginatedReportEmbeddingData() {
+
+      PowerBIClient pbiClient = TokenManager.GetPowerBiClient();
+
+      Guid wsId = new Guid("8ecc4996-2746-49c4-a378-6ce0519c57d0");
+      Guid pagReportId = new Guid("3ea30594-2470-4be0-8557-023fdb9c65e6");
+
+      var report = pbiClient.Reports.GetReportInGroup(wsId, pagReportId);
+      var embedUrl = report.EmbedUrl;
+      var reportName = report.Name;
+
+
+      return new ReportEmbeddingData {
+        reportId = pagReportId.ToString(),
+        reportName = reportName,
+        embedUrl = embedUrl,
+        accessToken = TokenManager.GetAccessToken()
+      };
+
+    }
+
+    public static ReportEmbeddingData GetPaginatedReportEmbeddingDataAppOnly() {
+
+      PowerBIClient pbiClient = TokenManager.GetPowerBiAppOnlyClient();
+
+      Guid wsId = new Guid("8ecc4996-2746-49c4-a378-6ce0519c57d0");
+      Guid pagReportId = new Guid("3ea30594-2470-4be0-8557-023fdb9c65e6");
+
+      var report = pbiClient.Reports.GetReportInGroup(wsId, pagReportId);
+      var embedUrl = report.EmbedUrl;
+      var reportName = report.Name;
+
+      // create token request object
+      GenerateTokenRequest generateTokenRequestParameters = new GenerateTokenRequest(accessLevel: "View");
+
+      // call to Power BI Service API and pass GenerateTokenRequest object to generate embed token
+      string embedToken = pbiClient.Reports.GenerateTokenInGroup(workspaceId,
+                                                                 report.Id,
+                                                                 generateTokenRequestParameters).Token;
+
+      return new ReportEmbeddingData {
+        reportId = pagReportId.ToString(),
         reportName = reportName,
         embedUrl = embedUrl,
         accessToken = embedToken
