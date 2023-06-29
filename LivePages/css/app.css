@@ -11,8 +11,10 @@ body {
 }
 
   #toolbar button {
-    font-size: 24px;
-    width: 180px
+    font-size: 10px;
+    width: 132px;
+    border-radius: 8px;
+    padding: 3px;
   }
 
   #toolbar .radio-group {

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Demo09: White Label Loading</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.js"></script>
+</head>
+
+<body>
+
+  <div id="loading" style="text-align:center;">
+    <div style="font-size:52px;margin:32px;">Loading report...</div>
+    <div>
+      <img title="Loading..." src="css/img/loading.gif" style="width:25%;margin:0;" />
+    </div>
+  </div>
+
+  <div id="embedContainer" style="display:none;" />
+
+  <script>
+
+    // data required for embedding Power BI report
+    var embedReportId = "11111111-1111-1111-1111-111111111111";
+    var embedUrl = "https://app.powerbi.com/reportEmbed";
+    var accessToken = "ACCESS_TOKEN_HERE";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    var config = {
+      type: 'report',
+      id: embedReportId,
+      embedUrl: embedUrl,
+      accessToken: accessToken,
+      tokenType: models.TokenType.Embed,
+    };
+
+    // Get a reference to the embedded report HTML element
+    var reportContainer = document.getElementById('embedContainer');
+
+    // call load() instead of embed() to load the report while delaying the rendering process
+    var report = powerbi.load(embedContainer, config);
+
+    // when loaded event occurs, set current page then call render()
+    report.on("loaded", async function () {
+
+      $("#loading").hide();
+      $("#embedContainer").show();
+
+      // Call report.render() to display report
+      report.render(config);
+    });
+
+
+    // code to resize the reportContainer to the size of the hosting browser window.
+    $(function () {
+      var widthBuffer = 12;
+      var heightBuffer = 12;
+      $("#embedContainer").height($(window).height() - (heightBuffer));
+      $("#embedContainer").width($(window).width() - widthBuffer);
+      $(window).resize(function () {
+        $("#embedContainer").height($(window).height() - (heightBuffer));
+        $("#embedContainer").width($(window).width() - widthBuffer);
+      });
+    });
+
+  </script>
+
+</body>
+</html>

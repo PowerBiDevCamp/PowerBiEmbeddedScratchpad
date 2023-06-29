@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8" />
+  <title>@AppName</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.js"></script>
+</head>
+
+<body>
+
+  <div id="toolbar">
+    <div class="radio-group">
+      <span class="radio-group-label">Select Layout:</span>
+      <input type="radio" name="layout" value="default" id="default" checked />
+      <label for="default">Default Layout</label>
+      <input type="radio" name="layout" value="mobile" id="mobile" />
+      <label for="mobile">Mobile Layout</label>
+      <input type="radio" name="layout" value="custom1" id="custom1" />
+      <label for="custom1">Custom Layout 1</label>
+      <input type="radio" name="layout" value="custom2" id="custom2" />
+      <label for="custom2">Custom Layout 2</label>
+    </div>
+  </div>
+
+  <div id="reportContainer" />
+
+  <script>
+
+    // data required for embedding Power BI report
+    var embedReportId = "@EmbedReportId";
+    var embedUrl = "@EmbedUrl";
+    var accessToken = "@EmbedToken";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    var pageName = "ReportSection432ffded90e56d5553a1";
+    var mapVisualName = "a846946d789b47a1480c";
+    var tableVisualName = "d0d0c86e46e75dc745b3";
+
+    var widthBuffer = 12;
+    var heightBuffer = 24;
+    var toolbarHeight = $("#toolbar").height();
+    var reportHeight = $(window).height() - (heightBuffer + toolbarHeight);
+    var reportWidth = $(window).width() - widthBuffer;
+
+    var defaultSetting = {
+      layoutType: models.LayoutType.Master,
+      panes: { filters: { visible: false } }
+    };
+
+    var mobileSetting = {
+      layoutType: models.LayoutType.MobilePortrait,
+      panes: { filters: { visible: false } }
+    };
+
+    var customLayout1Settings = {
+      layoutType: models.LayoutType.Custom,
+      panes: { filters: { visible: false } },
+      customLayout: {
+        pageSize: {
+          type: models.PageSizeType.Custom,
+          width: reportWidth,
+          height: reportHeight
+        },
+        displayOption: models.DisplayOption.FitToPage,
+        pagesLayout: {
+          [pageName]: {
+            visualsLayout: {
+              [mapVisualName]: { x: 0, y: 0, width: reportWidth, height: reportHeight },
+              [tableVisualName]: { displayState: { mode: models.VisualContainerDisplayMode.Hidden } }
+            }
+          }
+        }
+      }
+    };
+
+    var customLayout2Settings = {
+      layoutType: models.LayoutType.Custom,
+      panes: { filters: { visible: false } },
+      customLayout: {
+        pageSize: {
+          type: models.PageSizeType.Custom,
+          width: reportWidth,
+          height: reportHeight
+        },
+        displayOption: models.DisplayOption.FitToPage,
+        pagesLayout: {
+          [pageName]: {
+            visualsLayout: {
+              [mapVisualName]: { x: (reportWidth * 0.20), y: 0, width: (reportWidth * 0.80), height: reportHeight },
+              [tableVisualName]: {
+                x: 0, y: 0, width: (reportWidth * 0.20), height: reportHeight,
+                displayState: { mode: models.VisualContainerDisplayMode.Visible }
+              }
+            }
+          }
+        }
+      }
+    };
+
+    var config = {
+      type: 'report',
+      id: embedReportId,
+      embedUrl: embedUrl,
+      accessToken: accessToken,
+      tokenType: models.TokenType.Embed,
+      settings: { panes: { filters: { visible: false } } }
+    };
+
+    // Get a reference to the embedded report HTML element
+    var reportContainer = document.getElementById('reportContainer');
+
+    // Embed the report and display it within the div container.
+    var report = powerbi.embed(reportContainer, config);
+
+    $(":radio").change((eventArgs) => {
+      var selectedLayout = $('input[name="layout"]:checked').val();
+      var settings;
+      switch (selectedLayout) {
+        case "default":
+          settings = defaultSetting;
+          break;
+        case "mobile":
+          settings = mobileSetting;
+          break;
+        case "custom1":
+          settings = customLayout1Settings;
+          break;
+        case "custom2":
+          settings = customLayout2Settings;
+          break;
+      }
+      powerbi.reset(reportContainer);
+      config.settings = settings;
+      report = powerbi.embed(reportContainer, config);
+    });
+
+    $(function () {
+      var widthBuffer = 12;
+      var heightBuffer = 24;
+      var toolbarHeight = $("#toolbar").height();
+      $("#reportContainer").height($(window).height() - (heightBuffer + toolbarHeight));
+      $("#reportContainer").width($(window).width() - widthBuffer);
+      $(window).resize(function () {
+        var toolbarHeight = $("#toolbar").height();
+        $("#reportContainer").height($(window).height() - (heightBuffer + toolbarHeight));
+        $("#reportContainer").width($(window).width() - widthBuffer);
+      });
+    });
+
+  </script>
+
+</body>
+</html>

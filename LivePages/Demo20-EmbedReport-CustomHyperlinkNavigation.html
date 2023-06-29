@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <title>Demo20: HyperLikNavigation</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.js"></script>
+</head>
+<body style="margin:0;padding:0;background-color:#EEE;">
+  <div id="embedContainer" />
+
+  <script>
+
+    // data required for embedding Power BI report
+    var embedReportId = "11111111-1111-1111-1111-111111111111";
+    var embedUrl = "https://app.powerbi.com/reportEmbed";
+    var accessToken = "ACCESS_TOKEN_HERE";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    var config = {
+      type: 'report',
+      id: embedReportId,
+      embedUrl: embedUrl,
+      accessToken: accessToken,
+      tokenType: models.TokenType.Embed,
+      viewMode: models.ViewMode.View,
+      settings: {
+        hyperlinkClickBehavior: models.HyperlinkClickBehavior.RaiseEvent,
+        panes: {
+          filters: { visible: false, expanded: false },
+          bookmarks: { visible: false },
+        }
+      }
+    };
+
+    var embedContainer = document.getElementById('embedContainer');
+
+    // call load() instead of embed() for phased loading
+    var report = powerbi.load(embedContainer, config);
+
+    // when loaded event occurs, set current page then call render()
+    report.on("loaded", async function () {
+      var pages = await report.getPages();
+      // find target page using displayName
+      var targetPageDisplayName = "Product Catalog";
+      var targetPage = pages.find(function (page) {
+        return page.displayName === targetPageDisplayName;
+      });
+      // manipulate embed configuation
+      config.pageName = targetPage.name;
+      // Call report.render() to display report
+      report.render(config);
+    });
+
+    report.on('dataHyperlinkClicked', async (args) => {
+      var fullUrl = args.detail.url;
+      console.log("Perform action on URL: " + fullUrl);
+    });
+
+    $(function () {
+      var widthBuffer = 272;
+      var heightBuffer = 18;
+      $("#embedContainer").width($(window).width() - widthBuffer);
+      $("#embedContainer").height($(window).height() - heightBuffer);
+      $("#leftnav").height($(window).height() - heightBuffer);
+      $(window).resize(function () {
+        $("#embedContainer").width($(window).width() - widthBuffer);
+        $("#embedContainer").height($(window).height() - (heightBuffer));
+        $("#leftnav").height($(window).height() - heightBuffer);
+      });
+    });
+
+  </script>
+</body>
+</html>

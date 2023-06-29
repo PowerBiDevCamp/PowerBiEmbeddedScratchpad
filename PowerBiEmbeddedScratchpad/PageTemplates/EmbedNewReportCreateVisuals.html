@@ -1,0 +1,213 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8" />
+  <title>@AppName</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.min.js"></script>
+  <script src="scripts/powerbi-report-authoring.js"></script>
+</head>
+
+<body style="margin:0;padding:0;background-color:#EEE;">
+
+  <div id="toolbar">
+    <button type="button" id="toggleEditMode" style="font-size:14px">Toggel edit mode</button>
+    <button type="button" id="createVisual1" style="font-size:14px">Create Visual 1</button>
+    <button type="button" id="createVisual2" style="font-size:14px">Create Visual 2</button>
+    <button type="button" id="createVisual3" style="font-size:14px">Create Visual 3</button>
+    <button type="button" id="deleteVisual" style="font-size:14px">Delete Visual</button>
+  </div>
+
+  <div id="reportContainer" />
+
+  <script>
+
+    // data required for embedding Power BI report
+    var embedReportId = "@EmbedReportId";
+    var embedUrl = "@EmbedUrl";
+    var accessToken = "@EmbedToken";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    var config = {
+      type: 'report',
+      id: embedReportId,
+      embedUrl: embedUrl,
+      accessToken: accessToken,
+      tokenType: models.TokenType.Embed,
+      permissions: models.Permissions.All,
+      viewMode: models.ViewMode.View,
+      settings: {
+        panes: {
+          filters: { visible: true, expanded: true },
+          bookmarks: { visible: false },
+          visualizations: { visible: true, expanded: false },
+          fields: { visible: true, expanded: true },
+          selection: { visible: false },
+          syncSlicers: { visible: false }
+        }
+      }
+    };
+
+    // Get a reference to the embedded report HTML element
+    var reportContainer = document.getElementById('reportContainer');
+
+    // Embed the report and display it within the div container.
+    var report = powerbi.embed(reportContainer, config);
+
+    // Display Report object in browser console window
+    console.log(report);
+
+    var currentPage;
+    var newVisual;
+    var viewMode = "view";
+
+    report.on('loaded', async function () {
+      var pages = await report.getPages();
+      currentPage = pages[0];
+    });
+
+    $("#toggleEditMode").click(function () {
+      viewMode = (viewMode == "view") ? "edit" : "view";
+      report.switchMode(viewMode);
+      if (viewMode == "edit") {
+        var settings = {
+          panes: { filters: { visible: true } }
+        };
+        report.updateSettings(settings);
+      }
+
+    });
+
+    $("#createVisual1").click(async function () {
+
+      const visual1CustomLayout = {
+        x: 200, y: 100, z: 0,
+        width: 600, height: 400,
+        displayState: { mode: models.VisualContainerDisplayMode.Visible }
+      };
+
+      newVisual = await currentPage.createVisual("tableEx", visual1CustomLayout, true);
+
+      var visualName = newVisual.visual.name;
+      var pageName = newVisual.visual.page.name;
+
+      console.log("visual: " + visualName);
+      console.log("page: " + pageName);
+
+      const columnSchema = "http://powerbi.com/product/schema#column";
+      const measureSchema = "http://powerbi.com/product/schema#measure";
+
+      await newVisual.visual.addDataField('Values', { $schema: columnSchema, table: "Customers", column: "State" });
+      await newVisual.visual.addDataField('Values', { $schema: columnSchema, table: "Customers", column: "City" });
+      await newVisual.visual.addDataField('Values', { $schema: measureSchema, table: "Sales", measure: "Sales Revenue" });
+
+    });
+
+    $("#createVisual2").click(async function () {
+
+      const visual1CustomLayout = {
+        x: 200, y: 100, z: 0,
+        width: 600, height: 400,
+        displayState: { mode: models.VisualContainerDisplayMode.Visible }
+      };
+
+      newVisual = await currentPage.createVisual("tableEx", visual1CustomLayout, true);
+
+      var visualName = newVisual.visual.name;
+      var pageName = newVisual.visual.page.name;
+
+      console.log("visual: " + visualName);
+      console.log("page: " + pageName);
+
+      const columnSchema = "http://powerbi.com/product/schema#column";
+      const measureSchema = "http://powerbi.com/product/schema#measure";
+
+      await newVisual.visual.addDataField('Values', { $schema: columnSchema, table: "Customers", column: "State" });
+      await newVisual.visual.addDataField('Values', { $schema: columnSchema, table: "Customers", column: "City" });
+      await newVisual.visual.addDataField('Values', { $schema: measureSchema, table: "Sales", measure: "Sales Revenue" });
+
+      console.log("Before removeFilters", (await newVisual.visual.getFilters()));
+      newVisual.visual.removeFilters();
+      console.log("After removeFilters", (await newVisual.visual.getFilters()));
+
+    });
+
+    $("#createVisual3").click(async function () {
+
+      const visual1CustomLayout = {
+        x: 200, y: 100, z: 0,
+        width: 600, height: 400,
+        displayState: { mode: models.VisualContainerDisplayMode.Visible }
+      };
+
+      newVisual = await currentPage.createVisual("tableEx", visual1CustomLayout, true);
+
+      const filterState = {
+        $schema: 'http://powerbi.com/product/schema#basic',
+        target: { table: "Customers", column: "State" },
+        filterType: models.FilterType.Basic,
+        operator: "All",
+        values: [],
+        displaySettings: { isHiddenInViewMode: true }
+      };
+
+      const filterCity = {
+        $schema: 'http://powerbi.com/product/schema#basic',
+        target: { table: "Customers", column: "City" },
+        filterType: models.FilterType.Basic,
+        operator: "All",
+        values: [],
+        displaySettings: { isHiddenInViewMode: true }
+      };
+
+      const filterSales = {
+        $schema: 'http://powerbi.com/product/schema#basic',
+        target: { table: "Sales", measure: "Sales Revenue" },
+        filterType: models.FilterType.Basic,
+        operator: "All",
+        values: [],
+        displaySettings: { isHiddenInViewMode: true }
+      };
+
+      // create array of filters
+      var filters = [filterState, filterCity, filterSales];
+      // add filter to new visual
+      await newVisual.visual.updateFilters(models.FiltersOperations.Add, filters);
+
+      const columnSchema = "http://powerbi.com/product/schema#column";
+      const measureSchema = "http://powerbi.com/product/schema#measure";
+
+      await newVisual.visual.addDataField('Values', { $schema: columnSchema, table: "Customers", column: "State" });
+      await newVisual.visual.addDataField('Values', { $schema: columnSchema, table: "Customers", column: "City" });
+      await newVisual.visual.addDataField('Values', { $schema: measureSchema, table: "Sales", measure: "Sales Revenue" });
+
+    });
+
+    $("#deleteVisual").click(async function () {
+      await currentPage.deleteVisual(newVisual.visual.name);
+    });
+
+
+    $(function () {
+      var widthBuffer = 12;
+      var heightBuffer = 24;
+      var toolbarHeight = $("#toolbar").height();
+      $("#reportContainer").height($(window).height() - (heightBuffer + toolbarHeight));
+      $("#reportContainer").width($(window).width() - widthBuffer);
+      $(window).resize(function () {
+        var toolbarHeight = $("#toolbar").height();
+        $("#reportContainer").height($(window).height() - (heightBuffer + toolbarHeight));
+        $("#reportContainer").width($(window).width() - widthBuffer);
+      });
+    });
+
+  </script>
+
+</body>
+</html>

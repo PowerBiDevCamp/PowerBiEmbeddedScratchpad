@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <title>Demo13: Page Navigation</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.js"></script>
+</head>
+<body style="margin:0;padding:0;background-color:#EEE;">
+  <div id="leftnav" style="float:left; width:240px;">
+    <h3>Page Navigation</h3>
+    <div id="loading">
+      <img title="Loading..." src="css/img/loading.gif" style="width:80px;margin-top:36px;margin-left:72px;" />
+    </div>
+    <div id="leftnav-menu">
+      <ul id="page-navigation"></ul>
+    </div>
+  </div>
+  <div id="embedContainer" style="margin-left: 260px;" />
+  <script>
+
+    // data required for embedding Power BI report
+    var embedReportId = "11111111-1111-1111-1111-111111111111";
+    var embedUrl = "https://app.powerbi.com/reportEmbed";
+    var accessToken = "ACCESS_TOKEN_HERE";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    var config = {
+      type: 'report',
+      id: embedReportId,
+      embedUrl: embedUrl,
+      accessToken: accessToken,
+      tokenType: models.TokenType.Embed,
+      viewMode: models.ViewMode.View,
+      settings: {
+        panes: {
+          pageNavigation: { visible: false }
+        }
+      }
+    };
+
+    var embedContainer = document.getElementById('embedContainer');
+
+    var report = powerbi.embed(embedContainer, config);
+
+    report.on('loaded', async function () {
+
+      $("#loading").show();
+
+      // function calls with await blocks until asynch method completes
+      var pages = await report.getPages();
+
+      $("#loading").hide();
+
+      var pageNavigation = $("#page-navigation").empty();
+
+      // enumerate through pages of the report
+      for (var index = 0; index < pages.length; index++) {
+        // determine which pages are visible and not hidden
+        if (pages[index].visibility == 0) { // 0 means visible and 1 means hidden
+          // get page display name
+          var reportPageDisplayName = pages[index].displayName;
+          // use jQuery create a navigation link for each page
+          pageNavigation.append($("<li>")
+            .append($('<a href="javascript:;" >')
+            .text(pages[index].displayName))
+            .click(function (domEvent) {
+              // get text from link to get page name
+              var targetPageName = domEvent.target.textContent ? domEvent.target.textContent : domEvent.target.firstChild.textContent;
+              // get target page from pages collection
+              var targetPage = pages.find(function (page) { return page.displayName === targetPageName; });
+              // display page object in browser console
+              console.log("Navigate to " + targetPage.displayName);
+              // navigate report to target page
+              targetPage.setActive();
+            }));
+        }
+      }
+    });
+
+    $(function () {
+      var widthBuffer = 272;
+      var heightBuffer = 18;
+      $("#embedContainer").width($(window).width() - widthBuffer);
+      $("#embedContainer").height($(window).height() - heightBuffer);
+      $("#leftnav").height($(window).height() - heightBuffer);
+      $(window).resize(function () {
+        $("#embedContainer").width($(window).width() - widthBuffer);
+        $("#embedContainer").height($(window).height() - (heightBuffer));
+        $("#leftnav").height($(window).height() - heightBuffer);
+      });
+    });
+
+  </script>
+</body>
+</html>

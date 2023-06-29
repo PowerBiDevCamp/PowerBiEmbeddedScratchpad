@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <title>Demo24: Row Level Security</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.js"></script>
+</head>
+<body>
+
+  <div id="toolbar" style="text-align:center;">
+    <button type="button" id="loadReportAllData" style="font-size:14px">All Regions</button>
+    <button type="button" id="loadReportWestern" style="font-size:14px">Western Region</button>
+    <button type="button" id="loadReportCentral" style="font-size:14px">Central Region</button>
+    <button type="button" id="loadReportEastern" style="font-size:14px">Eastern Region</button>
+    <button type="button" id="loadReportCombo" style="font-size:14px">Combo Regions</button>
+  </div>
+
+  <div id="reportContainer" />
+
+  <script>
+
+    // data required for embedding Power BI report
+    var embedReportId = "11111111-1111-1111-1111-111111111111";
+    var embedUrl = "https://app.powerbi.com/reportEmbed";
+    var embedTokenAllData = "ACCESS_TOKEN_1_HERE";
+    var embedTokenWesternSales = "ACCESS_TOKEN_2_HERE";
+    var embedTokenWesternSales = "ACCESS_TOKEN_3_HERE";
+    var embedTokenCentralSales = "ACCESS_TOKEN_4_HERE";
+    var embedTokenEasternSales = "ACCESS_TOKEN_5_HERE";
+    var embedTokenCombo = "ACCESS_TOKEN_6_HERE";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    // Get a reference to the embedded report HTML element
+    var reportContainer = document.getElementById('reportContainer');
+
+    var loadReport = function (embedToken) {
+
+      var config = {
+        type: 'report',
+        id: embedReportId,
+        embedUrl: embedUrl,
+        accessToken: embedToken,
+        tokenType: models.TokenType.Embed,
+        settings: {
+          panes: {
+            filters: { visible: false },
+            pageNavigation: { visible: false }
+          }
+        }
+      };
+
+      powerbi.reset(reportContainer);
+      powerbi.embed(reportContainer, config);
+    }
+
+    $("#loadReportAllData").click(function () { loadReport(embedTokenAllData) });
+    $("#loadReportWestern").click(function () { loadReport(embedTokenWesternSales) });
+    $("#loadReportCentral").click(function () { loadReport(embedTokenCentralSales) });
+    $("#loadReportEastern").click(function () { loadReport(embedTokenEasternSales) });
+    $("#loadReportCombo").click(function () { loadReport(embedTokenCombo) });
+
+    loadReport(embedTokenEasternSales);
+
+    $(function () {
+      var widthBuffer = 12;
+      var heightBuffer = 24;
+      var toolbarHeight = $("#toolbar").height();
+      $("#reportContainer").height($(window).height() - (heightBuffer + toolbarHeight));
+      $("#reportContainer").width($(window).width() - widthBuffer);
+      $(window).resize(function () {
+        var toolbarHeight = $("#toolbar").height();
+        $("#reportContainer").height($(window).height() - (heightBuffer + toolbarHeight));
+        $("#reportContainer").width($(window).width() - widthBuffer);
+      });
+    });
+
+  </script>
+</body>
+</html>

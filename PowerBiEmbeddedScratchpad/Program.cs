@@ -1,0 +1,30 @@
+﻿using PowerBiEmbeddedScratchpad.Services;
+
+Console.WriteLine("Creating Scratchpad Pages");
+bool launchInBrowser = true;
+
+PageGenerator.GenerateReportPageUserOwnsData(launchInBrowser);
+PageGenerator.GenerateReportPageAppOwnsData(launchInBrowser);
+//PageGenerator.GenerateReportPageEditMode(launchInBrowser);
+//PageGenerator.GenerateReportWithToolbarPage(launchInBrowser);
+//PageGenerator.GenerateReportPageWithTransparentBackground(launchInBrowser);
+//PageGenerator.GenerateReportPageWithThemeLoading(launchInBrowser);
+//PageGenerator.GenerateReportPageWithContrastMode(launchInBrowser);
+//PageGenerator.GenerateReportPageWithPhasedLoading(launchInBrowser);
+//PageGenerator.GenerateReportPageWithWhiteLabelLoading(launchInBrowser);
+//PageGenerator.GenerateReportPageWithBootstrapOptimization(launchInBrowser);
+//PageGenerator.GenerateReportVisualPage(launchInBrowser);
+//PageGenerator.GenerateReportWithCustomLayout(launchInBrowser);
+//PageGenerator.GenerateReportInspectorPage(launchInBrowser);
+//PageGenerator.GenerateReportWithPageNavigation(launchInBrowser);
+//PageGenerator.GenerateReportWithBookmarks(launchInBrowser);
+//PageGenerator.GenerateReportWithBookmarkPlayMode(launchInBrowser);
+//PageGenerator.GenerateReportWithBookmarkCarousel(launchInBrowser);
+//PageGenerator.GenerateReportWithCustomFiltering(launchInBrowser);
+//PageGenerator.GenerateReportWithContextMenusPage(launchInBrowser);
+//PageGenerator.GenerateReportWithCustomExportCommand(launchInBrowser);
+//PageGenerator.GenerateReportWithHyperlinkNavigation(launchInBrowser);
+//PageGenerator.GenerateNewReportPage(launchInBrowser);
+//PageGenerator.GenerateNewReportPageWithSaveAsRedirect(launchInBrowser);
+//PageGenerator.GenerateReportWithDynamicBinding(launchInBrowser);
+//PageGenerator.GenerateReportWithRls(launchInBrowser);
